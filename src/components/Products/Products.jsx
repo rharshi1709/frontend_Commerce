@@ -52,7 +52,7 @@ function Products() {
   // fetch products
   useEffect(() => {
     async function getProducts() {
-      const url = 'http://localhost:8000/api/products'
+      const url = 'https://backend-commerce-mf9d.onrender.com/api/products'
       const response = await fetch(url)
       const data = await response.json()
       setProducts(data.data)
@@ -63,7 +63,7 @@ function Products() {
   // fetch categories
   useEffect(() => {
     async function getCategory() {
-      const url = 'http://localhost:8000/api/category'
+      const url = 'https://backend-commerce-mf9d.onrender.com/api/category'
       const response = await fetch(url)
       const data = await response.json()
       setCategory(data.data)

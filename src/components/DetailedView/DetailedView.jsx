@@ -10,7 +10,7 @@ function DetailedView() {
      useEffect(() => {
        try{
          const getProduct = async () => {
-           const url=`http://localhost:8000/api/product/${id}`
+           const url=`https://backend-commerce-mf9d.onrender.com/api/product/${id}`
            const response =await fetch(url)
            const data=await response.json()
            console.log(data)
