@@ -17,7 +17,7 @@ function RegisterForm() {
     event.preventDefault();
     try {
       const userDetails = { username, password, email };
-      const res = await fetch('https://backend-commerce-mf9d.onrender.com/api/register', {
+      const res = await fetch('https://backend-commerce-1.onrender.com/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userDetails),

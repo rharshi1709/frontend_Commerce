@@ -63,7 +63,7 @@ function Products() {
   // fetch categories
   useEffect(() => {
     async function getCategory() {
-      const url = 'https://backend-commerce-mf9d.onrender.com/api/category'
+      const url = 'https://backend-commerce-1.onrender.com/api/category'
       const response = await fetch(url)
       const data = await response.json()
       setCategory(data.data)
