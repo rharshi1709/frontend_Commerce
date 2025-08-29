@@ -1,0 +1,14 @@
+body{
+    min-height: fit-content;
+    padding-top: 50px;
+    overflow-x: hidden;
+    background-color: aliceblue;
+}
+@media only screen and (max-width: 768px) {
+    body{
+    min-height: fit-content;
+    padding-top: 0px;
+    overflow-x: hidden;
+    
+}
+}

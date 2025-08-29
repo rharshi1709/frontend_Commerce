@@ -1,0 +1,21 @@
+.not-found{
+display: flex;
+flex-direction: column;
+min-width: 100vw;
+min-height: 100vh;
+ text-align: center;
+ padding: 10px;
+ color: black;
+}
+.not-found h1{
+    font-size: 100px;
+}
+.not-found h2{
+    font-size: 30px;
+    font-style: italic
+    ;
+}
+.not-found h3{
+    font-size: 20px;
+    
+}

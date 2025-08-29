@@ -1,0 +1,107 @@
+.home {
+  background-image: url('https://cdn.shopify.com/s/files/1/0095/7602/2078/files/ban2_600x600.jpg?v=1618478010');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+
+  /* Left center alignment */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertical center */
+  align-items: flex-start;   /* left side */
+  text-align: left;          /* text aligned left */
+padding-left: 10px;       /* push content in from left */
+}
+
+.home h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.home p {
+  font-size: 1.2rem;
+  color: #e7e2e2;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+/* Buttons container */
+.home-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: flex-start;  /* align buttons left */
+}
+
+/* Buttons */
+.btn {
+  
+  border-radius: 8px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background: #e32a2a;
+  color: #ffffff;
+}
+
+.btn:hover {
+  background: #f4d3d3;
+  color: #1b1919;
+}
+
+.btn-secondary {
+     
+  border-radius: 8px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background: #e7cfcf;
+  color: #1b1919;
+}
+
+.btn-secondary:hover {
+  background: #094671;
+  color: aliceblue;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .home {
+    background-image: url('https://images.pexels.com/photos/2085118/pexels-photo-2085118.jpeg?cs=srgb&dl=pexels-jansel-ferma-306295-2085118.jpg&fm=jpg');
+    background-size: cover;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 15px;
+
+    /* ✅ Mobile stays center */
+    align-items: center;
+    text-align: center;
+  }
+
+  .home h1 {
+    font-size: 3rem;
+    color:#fdfdfd;
+    font-weight: bold;
+  }
+
+  .home p {
+    font-size: 1rem;
+    color:#ffffff;
+    font-weight: bold;
+  }
+
+  
+
+  .home-buttons {
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center; /* center buttons on mobile */
+  }
+}
