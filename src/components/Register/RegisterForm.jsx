@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './RegisterForm.css';
+
 import { useNavigate ,Navigate } from 'react-router-dom';  // ✅ Correct import
 import Cookies from 'js-cookie'
 function RegisterForm() {
