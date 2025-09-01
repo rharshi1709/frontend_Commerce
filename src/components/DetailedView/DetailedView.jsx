@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
-import './DetailedView.css'
+
 import Navbar from '../Navbar/Navbar'
 function DetailedView() {
     const [product,setProduct]= useState([])
