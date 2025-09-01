@@ -77,6 +77,18 @@ a{
   margin: 20px 0;
   gap: 10px;
 }
+.loader {
+  font-size: 30px;
+  
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px;
+  color: #007bff;
+}
 
 /* Page text */
 .page-info {

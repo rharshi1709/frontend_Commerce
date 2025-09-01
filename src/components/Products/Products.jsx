@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Products.css'
-
 import { Link } from 'react-router'
+
 function Products() {
   const [categoryGrp, setCategoryGrp] = useState('all')
   const [category, setCategory] = useState([])
@@ -9,6 +9,8 @@ function Products() {
 
   const [name, setName] = useState('')
   const [sort, setSort] = useState('')
+
+  const [loading, setLoading] = useState(true) // loader state
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1)
@@ -52,10 +54,17 @@ function Products() {
   // fetch products
   useEffect(() => {
     async function getProducts() {
-      const url = 'https://backend-commerce-mf9d.onrender.com/api/products'
-      const response = await fetch(url)
-      const data = await response.json()
-      setProducts(data.data)
+      setLoading(true) // start loader
+      try {
+        const url = 'https://backend-commerce-1.onrender.com/api/products'
+        const response = await fetch(url)
+        const data = await response.json()
+        console.log(data)
+        setProducts(data.data)
+      } catch (error) {
+        console.error(error)
+      }
+      setLoading(false) // stop loader
     }
     getProducts()
   }, [])
@@ -63,17 +72,20 @@ function Products() {
   // fetch categories
   useEffect(() => {
     async function getCategory() {
-      const url = 'https://backend-commerce-1.onrender.com/api/category'
-      const response = await fetch(url)
-      const data = await response.json()
-      setCategory(data.data)
+      try {
+        const url = 'https://backend-commerce-1.onrender.com/api/category'
+        const response = await fetch(url)
+        const data = await response.json()
+        setCategory(data.data)
+      } catch (error) {
+        console.error(error)
+      }
     }
     getCategory()
   }, [])
 
   return (
     <>
-      
       <div className='product'>
         <div className='filter'>
           <h2>Filters</h2>
@@ -109,40 +121,45 @@ function Products() {
 
         <div className='products-container'>
           <h2>Products</h2>
-          <div className="flex-container">
-            {currentItems.map((product) => (
-              <Link to={`/product/${product.id}`}><div className='product-card' key={product._id}>
-                <img src={product.image} alt={product.name} />
-                <p>{product.name}</p>
-                <p>Price: {product.price}</p>
-                <p>Rating: {product.rating}</p>
-              
-              </div></Link>
-              
-            ))}
-          </div>
 
-         <div className="pagination">
-  <button
-    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-  >
-    &#8592; {/* Left Arrow */}
-  </button>
+          {loading ? (
+            <div className="loader">Loading...</div> // loader UI
+          ) : (
+            <>
+              <div className="flex-container">
+                {currentItems.map((product) => (
+                  <Link to={`/product/${product.id}`} key={product._id}>
+                    <div className='product-card'>
+                      <img src={product.image} alt={product.name} />
+                      <p>{product.name}</p>
+                      <p>Price: {product.price}</p>
+                      <p>Rating: {product.rating}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
 
-  <span>
-    Page {currentPage} of {totalPages}
-  </span>
+              <div className="pagination">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  &#8592;
+                </button>
 
-  <button
-    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-  >
-    &#8594; {/* Right Arrow */}
-  </button>
-</div>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
 
-
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                >
+                  &#8594;
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
