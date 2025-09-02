@@ -34,6 +34,7 @@ function logout(){
         <Link className="link" to="/contact" onClick={() => setOpen(false)}>
           ContactUs
         </Link>
+        
         <button onClick={logout} className="button" >
           Logout
         </button>
