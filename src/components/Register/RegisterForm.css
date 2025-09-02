@@ -11,8 +11,8 @@
 }
 
 .card {
-    width: 400px;
-    max-width: 60vh;              /* Responsive for small screens */
+      min-width: 35vw;     
+      min-height: 35vh;         /* Responsive for small screens */
     padding: 30px;
     background-color: #fff;
     border-radius: 12px;
