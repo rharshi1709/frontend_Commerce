@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './Products.css'
 import { Link } from 'react-router'
+import { CartContext } from '../CartContext.jsx'
 
 function Products() {
+  const { addToCart } = useContext(CartContext) // Access addToCart
+
   const [categoryGrp, setCategoryGrp] = useState('all')
   const [category, setCategory] = useState([])
   const [products, setProducts] = useState([])
@@ -12,11 +15,9 @@ function Products() {
 
   const [loading, setLoading] = useState(true) // loader state
 
-  // pagination
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
 
-  // filter + search + sort
   let filteredArray = products
 
   if (name !== '') {
@@ -40,13 +41,11 @@ function Products() {
     })
   }
 
-  // pagination calculation
   const totalPages = Math.ceil(filteredArray.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const currentItems = filteredArray.slice(startIndex, endIndex)
 
-  // reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1)
   }, [name, categoryGrp, sort])
@@ -54,7 +53,7 @@ function Products() {
   // fetch products
   useEffect(() => {
     async function getProducts() {
-      setLoading(true) // start loader
+      setLoading(true) 
       try {
         const url = 'https://backend-commerce-1.onrender.com/api/products'
         const response = await fetch(url)
@@ -62,14 +61,13 @@ function Products() {
         console.log(data)
         setProducts(data.data)
       } catch (error) {
-        console.error(error)
+        alert(error)
       }
       setLoading(false) // stop loader
     }
     getProducts()
   }, [])
 
-  // fetch categories
   useEffect(() => {
     async function getCategory() {
       try {
@@ -85,84 +83,83 @@ function Products() {
   }, [])
 
   return (
-    <>
-      <div className='product'>
-        <div className='filter'>
-          <h2>Filters</h2>
+    <div className='product'>
+      <div className='filter'>
+        <h2>Filters</h2>
 
-          <input
-            className='search'
-            placeholder='Search'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        <input
+          className='search'
+          placeholder='Search'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-          <div className='category'>
-            <h3>Categories</h3>
-            <a onClick={() => setCategoryGrp("all")}>All</a>
-            {category.map((item) => (
-              <div key={item._id}>
-                <a onClick={() => setCategoryGrp(item.category.toLowerCase())}>
-                  {item.category}
-                </a>
-              </div>
-            ))}
-          </div>
-
-          <div className='sort'>
-            <h3>Sort By</h3>
-            <a onClick={() => setSort('ratingLowHigh')}> Rating (low - high)</a>
-            <a onClick={() => setSort('ratingHighLow')}> Rating (high - low)</a>
-            <a onClick={() => setSort('priceLowHigh')}> Price (low - high)</a>
-            <a onClick={() => setSort('priceHighLow')}> Price (high - low)</a>
-            <a onClick={() => setSort('')}>RemoveSorting</a>
-          </div>
+        <div className='category'>
+          <h3>Categories</h3>
+          <a onClick={() => setCategoryGrp("all")}>All</a>
+          {category.map((item) => (
+            <div key={item._id}>
+              <a onClick={() => setCategoryGrp(item.category.toLowerCase())}>
+                {item.category}
+              </a>
+            </div>
+          ))}
         </div>
 
-        <div className='products-container'>
-          <h2>Products</h2>
-
-          {loading ? (
-            <div className="loader">Loading...</div> // loader UI
-          ) : (
-            <>
-              <div className="flex-container">
-                {currentItems.map((product) => (
-                  <Link to={`/product/${product.id}`} key={product._id}>
-                    <div className='product-card'>
-                      <img src={product.image} alt={product.name} />
-                      <p>{product.name}</p>
-                      <p>Price: {product.price}</p>
-                      <p>Rating: {product.rating}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              <div className="pagination">
-                <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                >
-                  &#8592;
-                </button>
-
-                <span>
-                  Page {currentPage} of {totalPages}
-                </span>
-
-                <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                >
-                  &#8594;
-                </button>
-              </div>
-            </>
-          )}
+        <div className='sort'>
+          <h3>Sort By</h3>
+          <a onClick={() => setSort('ratingLowHigh')}> Rating (low - high)</a>
+          <a onClick={() => setSort('ratingHighLow')}> Rating (high - low)</a>
+          <a onClick={() => setSort('priceLowHigh')}> Price (low - high)</a>
+          <a onClick={() => setSort('priceHighLow')}> Price (high - low)</a>
+          <a onClick={() => setSort('')}>RemoveSorting</a>
         </div>
       </div>
-    </>
+
+      <div className='products-container'>
+        <h2>Products</h2>
+
+        {loading ? (
+          <div className="loader">Loading...</div>
+        ) : (
+          <>
+            <div className="flex-container">
+              {currentItems.map((product) => (
+                <div key={product._id} className='product-card'>
+                  <Link to={`/product/${product.id}`}>
+                    <img src={product.image} alt={product.name} />
+                    <p>{product.name}</p>
+                    <p>Price: {product.price}</p>
+                    <p>Rating: {product.rating}</p>
+                  </Link>
+                  <button onClick={() => addToCart(product)}>Add to Cart</button>
+                </div>
+              ))}
+            </div>
+
+            <div className="pagination">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                &#8592;
+              </button>
+
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                &#8594;
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   )
 }
 

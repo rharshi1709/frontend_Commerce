@@ -1,24 +1,32 @@
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import Cookies from 'js-cookie'
+import { useState, useContext } from 'react';
+import Cookies from 'js-cookie';
+import { CartContext } from '../CartContext.jsx'; // Import CartContext
+
 function Navbar() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false); // Toggle for mobile nav
- 
-function logout(){
-    Cookies.remove('jwt_token')
-    navigate('/login',{replace:true })
+  const { cart } = useContext(CartContext); // Access cart
 
-}
+  // Calculate total items in cart
+  const totalItems = cart.reduce((acc, item) => acc + item.count, 0);
 
+  function logout() {
+    Cookies.remove('jwt_token');
+    navigate('/login', { replace: true });
+  }
 
   return (
     <div className="navbar">
-     <h2>ShopEasy</h2>
-     <button className="hamburger" onClick={() => setOpen(!open)} aria-label="Toggle navigation">
-  ☰
-</button>
+      <h2>ShopEasy</h2>
+      <button
+        className="hamburger"
+        onClick={() => setOpen(!open)}
+        aria-label="Toggle navigation"
+      >
+        ☰
+      </button>
 
       {/* Links (toggle class for mobile) */}
       <div className={`nav-links ${open ? 'active' : ''}`}>
@@ -34,8 +42,13 @@ function logout(){
         <Link className="link" to="/contact" onClick={() => setOpen(false)}>
           ContactUs
         </Link>
-        
-        <button onClick={logout} className="button" >
+
+        {/* Cart link with item count */}
+        <Link className="link" to="/cart" onClick={() => setOpen(false)}>
+          Cart ({totalItems})
+        </Link>
+
+        <button onClick={logout} className="button">
           Logout
         </button>
       </div>

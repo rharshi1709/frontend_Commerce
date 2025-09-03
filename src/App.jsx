@@ -10,25 +10,26 @@ import DetailedView from './components/DetailedView/DetailedView'
 import Login from './components/Login/Login'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Navbar from './components/Navbar/Navbar'
-
+import Cart from './components/Cart.jsx'
+import { CartProvider } from './components/CartContext.jsx' // Import CartProvider
 
 function App() {
   return (
-    <>
-    <Navbar/>
+    <CartProvider> {/* Wrap entire app in CartProvider */}
+      <Navbar/>
       <Routes>
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/about" element={<ProtectedRoute><AboutUs /></ProtectedRoute>} />
         <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
         <Route path="/product/:id" element={<ProtectedRoute><DetailedView /></ProtectedRoute>} />
         <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
+        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} /> {/* Added Cart route */}
 
-     
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </CartProvider>
   )
 }
 
