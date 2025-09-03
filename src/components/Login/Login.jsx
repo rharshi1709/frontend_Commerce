@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import './Login.css';  // make sure to create this file
+import './login.css';  // make sure to create this file
 
 function Login() {
     const [password, setPassword] = useState('');
