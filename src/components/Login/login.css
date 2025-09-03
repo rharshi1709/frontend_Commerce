@@ -1,71 +1,83 @@
-/* RegisterForm.css */
-.form{
+.login-form-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-     background-color: #dbf7fd;
-     align-content: center;
+    align-items: center;
+    background-color: #dbf7fd;
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
-.card {
-    width: 60vw;
-    padding: 90px;
+.login-card {
+    min-width: 35vw;
+    min-height: 35vh;
+    padding: 30px;
     background-color: #fff;
-    justify-content: center;
-    border-radius: 10px;
-    
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-h1 {
+.login-title {
     text-align: center;
     margin-bottom: 25px;
     color: #333;
+    font-size: 26px;
 }
 
-.item {
-    margin-bottom: 20px;
+.login-item {
+    margin-bottom: 18px;
     display: flex;
     flex-direction: column;
 }
 
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
+.login-label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+    font-size: 14px;
 }
 
-.input {
-    padding: 10px;
+.login-input {
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.2s ease-in-out;
 }
 
-.input:focus {
+.login-input:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    box-shadow: 0 0 6px rgba(0,123,255,0.3);
 }
-button {
-    padding: 12px 30px;      /* smaller width instead of 100% */
+
+.login-button {
+    padding: 12px 28px;
     background-color: #007bff;
     border: none;
     color: white;
     font-size: 16px;
-    border-radius: 5px;
+    font-weight: 500;
+    border-radius: 6px;
     cursor: pointer;
-    display: block;          /* makes margin auto work */
-    margin: 0 auto;          /* centers the button horizontally */
+    display: block;
+    margin: 20px auto 0;
+    transition: background 0.3s ease-in-out;
 }
-.buttons{
-    padding: 5px;
-    display: flex;
-}
-button:hover {
+
+.login-button:hover {
     background-color: #0056b3;
 }
-.error-message{
-    color: rgb(198, 6, 6);
+
+.login-error {
+    color: red;
     text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.login-buttons {
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
 }

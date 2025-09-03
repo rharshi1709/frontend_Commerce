@@ -1,9 +1,9 @@
 .cart-container {
   color: black;
   min-height: 100vh;
+background-color:aliceblue;
   min-width: 100vw;
-  background: #f5f9ff;
-  padding: 20px;
+  padding-top: 35px;
   display: flex;
   
   justify-content: center;
@@ -16,7 +16,7 @@
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   width: 80vw;
-  
+  background-color: rgb(255, 255, 255);
 }
 
 .cart-card h2 {
