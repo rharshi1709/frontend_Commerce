@@ -31,7 +31,14 @@ export const CartProvider = ({ children }) => {
       ));
     }
   };
-
+ const deleteItem =(id)=>{
+    const item= cart.find(it=> it._id===id)
+    if (item){
+      setCart(cart.filter(item =>
+        item._id !== id 
+      ))
+    }
+ }
   // Clear entire cart
   const clearCart = () => setCart([]);
 
@@ -45,6 +52,7 @@ export const CartProvider = ({ children }) => {
       addToCart,
       removeFromCart,
       clearCart,
+      deleteItem,
       totalItems,
       totalPrice
     }}>

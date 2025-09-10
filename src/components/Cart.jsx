@@ -1,10 +1,15 @@
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
 import "./Cart.css";
+import Payment from "./Payment";
+import { Navigate, useNavigate } from "react-router";
 
 function Cart() {
-  const { cart, addToCart, removeFromCart, clearCart, totalItems, totalPrice } = useContext(CartContext);
-
+  const { cart, addToCart, removeFromCart, clearCart, totalItems, totalPrice ,deleteItem} = useContext(CartContext);
+  const navigate=useNavigate()
+  function payment(){
+navigate("/payment")
+  }
   return (
     <div className="cart-container">
       <div className="cart-card">
@@ -30,6 +35,7 @@ function Cart() {
                     <span className="item-count">{item.count}</span>
                     <button className="inc" onClick={() => addToCart(item)}>+</button>
                   </div>
+                  <button className="delete-button"onClick={() => deleteItem(item._id)} >❌</button>
                 </li>
               ))}
             </ul>
@@ -38,6 +44,7 @@ function Cart() {
               <p>Total Items: {totalItems}</p>
               <p>Total Price: ₹{totalPrice}</p>
               <button className="clear-cart" onClick={clearCart}>Clear Cart</button>
+               <button className="clear-cart" onClick={payment} >Buy Now</button>
             </div>
           </>
         )}

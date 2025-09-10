@@ -139,7 +139,15 @@
   background-color: #FFD700; /* Gold hover */
   color: #1B263B; /* Navy text on hover */
 }
-
+.delete-button{
+  margin-left: 10px;
+  background-color: transparent;
+}
+.delete-button:hover{
+  margin-left: 10px;
+  background-color: transparent;
+  border-color: transparent;
+}
 /* - button */
 .cart-buttons .dec {
   background-color: #1B263B; /* Navy default */
@@ -169,7 +177,7 @@
 
 
 @media (max-width: 600px) {
-  .cart-item { flex-direction: column; align-items: flex-start; }
-  .cart-buttons { width: 100%; justify-content: flex-start; margin-top: 10px; }
+ 
+  .cart-buttons { width: 100%; justify-content: flex-start;  }
   .cart-summary { flex-direction: column; gap: 10px; }
 }

@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Navbar from './components/Navbar/Navbar'
 import Cart from './components/Cart.jsx'
 import { CartProvider } from './components/CartContext.jsx' // Import CartProvider
+import Payment from './components/Payment.jsx'
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/product/:id" element={<ProtectedRoute><DetailedView /></ProtectedRoute>} />
         <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} /> {/* Added Cart route */}
-
+      <Route path="/payment" element={<ProtectedRoute><Payment/></ProtectedRoute>} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
