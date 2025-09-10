@@ -1,29 +1,31 @@
 .cart-container {
-  color: black;
+  color: #1B263B; /* Navy text */
   min-height: 100vh;
-background-color:aliceblue;
+  background-color: #E5E5E5; /* Light Gray background */
   min-width: 100vw;
   padding-top: 35px;
   display: flex;
-  
   justify-content: center;
 }
-.cart-empty{
+
+.cart-empty {
   text-align: center;
+  color: #1B263B; /* Navy text */
 }
+
 .cart-card {
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   width: 80vw;
-  background-color: rgb(255, 255, 255);
+  background-color: #FFFFFF; /* White card */
 }
 
 .cart-card h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
-  border-bottom: 2px solid #eee;
+  color: #1B263B; /* Navy */
+  border-bottom: 2px solid #E5E5E5; /* Light Gray line */
   padding-bottom: 10px;
 }
 
@@ -39,9 +41,9 @@ background-color:aliceblue;
   align-items: center;
   padding: 12px;
   margin: 12px 0;
-  border: 1px solid #eee;
+  border: 1px solid #E5E5E5; /* Light Gray border */
   border-radius: 12px;
-  background: #fafafa;
+  background: #FFFFFF; /* White background */
   flex-wrap: wrap;
 }
 
@@ -58,15 +60,18 @@ background-color:aliceblue;
   object-fit: cover;
   border-radius: 8px;
 }
-.item-details{
+
+.item-details {
   display: flex;
   justify-self: start;
   flex-direction: column;
 }
+
 .item-details p {
   font-size: 1rem;
   font-weight: 500;
   margin: 0;
+  color: #1B263B; /* Navy */
 }
 
 .cart-buttons {
@@ -86,25 +91,34 @@ background-color:aliceblue;
   transition: 0.2s;
 }
 
+/* + button */
 .cart-buttons .inc {
-  background: #28a745;
-  color: white;
+  background-color: #FFD700; /* Gold */
+  color: #1B263B; /* Navy text */
 }
 
-.cart-buttons .inc:hover { background: #218838; }
+.cart-buttons .inc:hover {
+  background-color: #1B263B; /* Navy hover */
+  color: #FFD700; /* Gold text */
+}
 
+/* - button */
 .cart-buttons .dec {
-  background: #dc3545;
-  color: white;
+  background-color: #FFD700; /* Gold */
+  color: #1B263B; /* Navy text */
 }
 
-.cart-buttons .dec:hover { background: #b02a37; }
+.cart-buttons .dec:hover {
+  background-color: #1B263B; /* Navy hover */
+  color: #FFD700; /* Gold text */
+}
 
 .item-count {
   padding: 0 8px;
   margin-top: 10px;
   font-weight: bold;
   font-size: 24px;
+  color: #1B263B; /* Navy */
 }
 
 .cart-summary {
@@ -115,18 +129,44 @@ background-color:aliceblue;
   align-items: center;
   flex-wrap: wrap;
 }
+/* + button */
+.cart-buttons .inc {
+  background-color: #1B263B; /* Navy default */
+  color: #FFD700; /* Gold text default */
+}
 
+.cart-buttons .inc:hover {
+  background-color: #FFD700; /* Gold hover */
+  color: #1B263B; /* Navy text on hover */
+}
+
+/* - button */
+.cart-buttons .dec {
+  background-color: #1B263B; /* Navy default */
+  color: #FFD700; /* Gold text default */
+}
+
+.cart-buttons .dec:hover {
+  background-color: #FFD700; /* Gold hover */
+  color: #1B263B; /* Navy text on hover */
+}
+
+/* Clear Cart button */
 .clear-cart {
   padding: 8px 15px;
-  background: #ff6b6b;
-  color: white;
+  background-color: #1B263B; /* Navy default */
+  color: #FFD700; /* Gold text default */
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-.clear-cart:hover { background: #e63946; }
+.clear-cart:hover {
+  background-color: #FFD700; /* Gold hover */
+  color: #1B263B; /* Navy text on hover */
+}
+
 
 @media (max-width: 600px) {
   .cart-item { flex-direction: column; align-items: flex-start; }

@@ -26,7 +26,7 @@ function Cart() {
                   </div>
 
                   <div className="cart-buttons">
-                    <button className="dec" onClick={() => removeFromCart(item.id)}>-</button>
+                    <button className="dec" onClick={() => removeFromCart(item._id)}>-</button>
                     <span className="item-count">{item.count}</span>
                     <button className="inc" onClick={() => addToCart(item)}>+</button>
                   </div>

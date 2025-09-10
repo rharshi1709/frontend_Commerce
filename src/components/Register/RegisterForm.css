@@ -1,27 +1,26 @@
-/* RegisterForm.css */
 .register-form-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #dbf7fd;
+    background-color: #E5E5E5; /* Light Gray */
     min-height: 100vh;   
     min-width: 100vw;   
 }
 
 .register-card {
-      min-width: 35vw;     
-      min-height: 35vh;  
-      padding: 30px;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    min-width: 35vw;     
+    min-height: 35vh;  
+    padding: 30px;
+    background-color: #FFFFFF; /* White */
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .register-title {
     text-align: center;
     margin-bottom: 25px;
-    color: #333;
-    font-size: 26px;
+    color: #1B263B; /* Navy */
+    font-size: 36px;
 }
 
 .register-item {
@@ -33,12 +32,12 @@
 .register-label {
     margin-bottom: 6px;
     font-weight: 600;
-    color: #444;
+    color: #1B263B; /* Navy */
     font-size: 14px;
 }
 
 .register-input {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 15px;
@@ -47,37 +46,39 @@
 
 .register-input:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 6px rgba(0,123,255,0.3);
+    border-color: #FFD700; /* Gold focus */
+    box-shadow: 0 0 6px rgba(255,215,0,0.3); /* Gold glow */
 }
 
 .register-button {
     padding: 12px 28px;
-    background-color: #007bff;
+    background-color: #FFD700; /* Gold */
     border: none;
-    color: white;
+    color: #1B263B; /* Navy text */
     font-size: 16px;
     font-weight: 500;
     border-radius: 6px;
     cursor: pointer;
     display: block;
     margin: 20px auto 0;
-    transition: background 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .register-button:hover {
-    background-color: #0056b3;
+    background-color: #1B263B; /* Navy hover */
+    color: #FFD700; /* Gold text */
+    border: 2px solid #FFD700;
 }
 
 .register-error {
-    color: red;
+    color: red; /* Can optionally change to a softer red or gold border highlight */
     text-align: center;
     font-size: 14px;
     margin-top: 10px;
 }
 
-.register-buttons{
-    margin-top: 10px;
+.register-buttons {
+  
     padding: 5px;
     display: flex;
 }

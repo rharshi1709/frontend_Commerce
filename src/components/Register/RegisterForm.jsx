@@ -47,7 +47,7 @@ function RegisterForm() {
         <h1 className="register-title">Register</h1>
         <form onSubmit={onSubmitForm}>
           <div className="register-item">
-            <label htmlFor="username" className="register-label">Username</label>
+            <label htmlFor="username" className="register-label">USERNAME</label>
             <input
               className="register-input"
               id="username"
@@ -61,7 +61,7 @@ function RegisterForm() {
           </div>
 
           <div className="register-item">
-            <label htmlFor="password" className="register-label">Password</label>
+            <label htmlFor="password" className="register-label">PASSWORD</label>
             <input
               className="register-input"
               id="password"
@@ -75,7 +75,7 @@ function RegisterForm() {
           </div>
 
           <div className="register-item">
-            <label htmlFor="email" className="register-label">Email</label>
+            <label htmlFor="email" className="register-label">EMAIL</label>
             <input
               className="register-input"
               id="email"
@@ -87,9 +87,10 @@ function RegisterForm() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
+ <p className='login-error'>If you have already Registered? Please Login</p>
           <div className="register-buttons">
             <button type="submit" className="register-button">Submit</button>
+           
             <button
               type="button"
               className="register-button"
@@ -100,6 +101,7 @@ function RegisterForm() {
           </div>
 
           {error && <p className="register-error">{error}</p>}
+          
         </form>
       </div>
     </div>

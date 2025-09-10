@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './Products.css'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { CartContext } from '../CartContext.jsx'
 
 function Products() {
-  const { addToCart } = useContext(CartContext) // Access addToCart
+  const { addToCart, removeFromCart, cart } = useContext(CartContext)
 
   const [categoryGrp, setCategoryGrp] = useState('all')
   const [category, setCategory] = useState([])
@@ -13,10 +13,16 @@ function Products() {
   const [name, setName] = useState('')
   const [sort, setSort] = useState('')
 
-  const [loading, setLoading] = useState(true) // loader state
+  const [loading, setLoading] = useState(true)
+
+ 
+ const getQuantity = (id) => {
+  const item = cart.find(p => p._id === id)
+  return (item? item.count : 0)
+}
 
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 10
+  const itemsPerPage = 8
 
   let filteredArray = products
 
@@ -53,7 +59,7 @@ function Products() {
   // fetch products
   useEffect(() => {
     async function getProducts() {
-      setLoading(true) 
+      setLoading(true)
       try {
         const url = 'https://backend-commerce-1.onrender.com/api/products'
         const response = await fetch(url)
@@ -63,7 +69,7 @@ function Products() {
       } catch (error) {
         alert(error)
       }
-      setLoading(false) // stop loader
+      setLoading(false)
     }
     getProducts()
   }, [])
@@ -112,7 +118,7 @@ function Products() {
           <a onClick={() => setSort('ratingHighLow')}> Rating (high - low)</a>
           <a onClick={() => setSort('priceLowHigh')}> Price (low - high)</a>
           <a onClick={() => setSort('priceHighLow')}> Price (high - low)</a>
-          <a onClick={() => setSort('')}>RemoveSorting</a>
+          <a onClick={() => setSort('')}>Remove Sorting</a>
         </div>
       </div>
 
@@ -126,13 +132,22 @@ function Products() {
             <div className="flex-container">
               {currentItems.map((product) => (
                 <div key={product._id} className='product-card'>
-                  <Link to={`/product/${product.id}`}>
+                  <Link to={`/product/${product._id}`}>
                     <img src={product.image} alt={product.name} />
                     <p>{product.name}</p>
                     <p>Price: {product.price}</p>
                     <p>Rating: {product.rating}</p>
                   </Link>
-                  <button onClick={() => addToCart(product)}>Add to Cart</button>
+
+                  {getQuantity(product._id) > 0 ? (
+                    <div className="cart-buttons">
+                      <button onClick={() => removeFromCart(product._id)}>-</button>
+                      <span>{getQuantity(product._id)}</span>
+                      <button onClick={() => addToCart(product)}>+</button>
+                    </div>
+                  ) : (
+                    <button onClick={() => addToCart(product)}>Add to Cart</button>
+                  )}
                 </div>
               ))}
             </div>

@@ -1,38 +1,38 @@
 /* About section container */
 .about-section{
-     background-color: #f9f9f9;
+     background-color: #eef2f6; /* updated light background */
       min-height: 100vh;
       padding: 30px;
 }
 .about {
     display: flex;
     flex-direction: row;
-    color: black; /* text color for desktop */
+    color: #1a1a1a; /* updated text color for desktop */
     align-content: center;
-    background-color: #f9f9f9; /* light backgrouminnd for better readability */
+    background-color: #eef2f6; /* light background updated */
    
 }
 .about2{
     display: flex;
     flex-direction: column;
-    color: black; /* text color for desktop */
+    color: #1a1a1a; /* updated text color for desktop */
     align-content: center;
     justify-content: center;
-    background-color: #f9f9f9; 
+    background-color: #eef2f6; 
     text-align: center;
 }
 span{
     font-style: italic;
     font-weight: 500;
-    font-size: 20px;
-    color: #db5f26;
+    font-size: 21px;
+    color:#1B263B;
 }
 /* Image styling */
 .about img,.about2 img {
     width: 50%;
-    height: 60vh; /* lets image scale properly */
-    object-fit: cover; /* crops image nicely without distortion */
-    border-radius: 20px; /* optional, rounded corners */
+    height: 60vh;
+    object-fit: cover;
+    border-radius: 20px;
     margin-left: 10px;
 }
 
@@ -43,8 +43,8 @@ span{
     justify-content: center;
     padding-left: 20px;
     padding-right: 20px;
-    color: #000; /* ensures text is visible */
- text-align: center;
+    color: #1a1a1a; /* updated text color */
+    text-align: center;
     line-height: 1.6;
 }
 
@@ -57,7 +57,7 @@ span{
 }
 
 .card {
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   width: 250px;
@@ -82,30 +82,31 @@ span{
 .card h3 {
   margin: 10px 0 5px;
   font-size: 1.2em;
-  color: #222;
+  color: #2c3e50; /* updated dark text */
 }
 
 .card .bio {
   margin: 0;
   font-size: 0.9em;
-  color: #666;
+  color: #7f8c8d; /* updated gray */
 }
 .card p {
   font-size: 0.94rem;
   line-height: 1.6;
-  color: #4a4a4a;
+  color: #34495e; /* updated paragraph color */
   margin: 0.25rem 0 0;
-  max-width: 46ch;               /* nice readable width */
+  max-width: 46ch;
 }
 .feedback-section {
   padding: 3rem 1rem;
-  background: #fafafa;
+  background: #f0f4f8; /* updated background */
   text-align: center;
 }
 
 .feedback-section h2 {
   font-size: clamp(1.4rem, 1.2rem + 1vw, 2rem);
   margin-bottom: 1.5rem;
+  color: #2c3e50; /* updated title color */
 }
 
 .feedback-container {
@@ -116,10 +117,9 @@ span{
   margin: 0 auto;
 }
 
-/* 3 columns desktop, 2 tablet, 1 mobile */
 .feedback-card {
   grid-column: span 4;
-  background: #fff;
+  background: #ffffff;
   padding: 1.25rem;
   border-radius: 18px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.06);
@@ -143,11 +143,11 @@ span{
 .feedback-card h3 {
   font-size: 1rem;
   margin: 0.25rem 0;
-  color: black;
+  color: #2c3e50; /* updated */
 }
 
 .feedback-card .rating {
-  color: #ffb400; /* golden stars */
+  color: #f39c12; /* golden stars updated */
   margin: 0.3rem 0;
   font-size: 1rem;
 }
@@ -155,12 +155,13 @@ span{
 .feedback-card .review {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #444;
+  color: #34495e;
 }
+
 /* Mobile view */
 @media only screen and (max-width: 768px) {
     .about-section{
-     background-color: #f9f9f9;
+     background-color: #eef2f6;
       min-height: 100vh;
       padding: 12px;
 }
@@ -169,14 +170,12 @@ span{
         justify-content: center;
         align-items: center;
         text-align: center; 
-        
     }
 
     .about img {
         width:70%;
         height: auto;
-        margin-top: 100px;
-         
+        margin-top: 100px; 
     }
 
     .text {

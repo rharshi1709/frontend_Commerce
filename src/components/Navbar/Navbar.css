@@ -1,28 +1,30 @@
 .navbar {
-    background-color: #f8f9fa;
+    background-color:#1B263B; /* Navy */
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     align-items: center;
-padding:5px;
+    padding:5px;
     align-content: center;
     height: 60px;
     display: flex;
     justify-content: space-between;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-   
+    z-index:1000;
 }
 
 .image {
     height: 40px;
     width: 50px;
 }
+
 .navbar h2{
-    color: black;
+    color: #FFD700; /* Gold */
     font-family: '';
     font-style: italic;
 }
+
 /* nav links for desktop */
 .nav-links {
     display: flex;
@@ -32,30 +34,31 @@ padding:5px;
 
 .link {
     text-decoration: none;
-    color: #383d42;
+    color: #FFFFFF; /* White */
     margin: 0 10px;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 .link:hover {
-    color: #ba5d3c;
+    color:#FFD700; /* Gold hover */
 }
 
 .button {
     margin-right: 20px;
     padding: 8px 16px;
-    background-color: #b93b10;
-    color: white;
+    background-color: #FFD700; /* Gold */
+    color: #1B263B; /* Navy */
     border-radius: 5px;
-    margin-bottom: 20px;
     cursor: pointer;
     border: none;
-    transition: background-color 0.2s ease;
+    
 }
 
 .button:hover {
-    background-color: #0d65c9;
+    background-color: #1B263B; /* Navy */
+    color: #FFD700; /* Gold */
+    border: 2px solid #FFD700; /* Keeps visibility */
 }
 
 .hamburger {
@@ -66,13 +69,13 @@ padding:5px;
     align-self: end;
     justify-self: end;
     cursor: pointer;
+    color: #FFD700; /* Gold */
 }
 
 /* Mobile styles */
 @media (max-width: 600px) {
     .hamburger {
         display: block;
-        color: #383d42;
     }
 
     .nav-links {
@@ -81,10 +84,10 @@ padding:5px;
         top: 60px;
         left: 0;
         width: 100%;
-        background-color: #f8f9fa;
+        background-color: #1B263B; /* Navy for mobile dropdown */
         flex-direction: column;
         padding: 10px 0;
-        border-top: 1px solid #ddd;
+        border-top: 1px solid #E5E5E5; /* Light Gray */
     }
 
     .nav-links.active {

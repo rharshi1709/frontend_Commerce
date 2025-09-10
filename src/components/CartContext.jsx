@@ -1,40 +1,43 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useMemo } from "react";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
+  // Add a product to the cart
   const addToCart = (product) => {
-    const existing = cart.find(item => item.id === product.id);
+    const existing = cart.find(item => item._id === product._id);
 
     if (existing) {
       setCart(cart.map(item =>
-        item.id === product.id ? { ...item, count: item.count + 1 } : item
+        item._id === product._id ? { ...item, count: item.count + 1 } : item
       ));
     } else {
       setCart([...cart, { ...product, count: 1 }]);
     }
   };
 
+  // Remove a product from the cart
   const removeFromCart = (id) => {
-    const existing = cart.find(item => item.id === id);
-
+    const existing = cart.find(item => item._id === id);
     if (!existing) return;
 
     if (existing.count === 1) {
-      setCart(cart.filter(item => item.id !== id));
+      setCart(cart.filter(item => item._id !== id));
     } else {
       setCart(cart.map(item =>
-        item.id === id ? { ...item, count: item.count - 1 } : item
+        item._id === id ? { ...item, count: item.count - 1 } : item
       ));
     }
   };
 
+  // Clear entire cart
   const clearCart = () => setCart([]);
 
-  const totalItems = cart.reduce((acc, item) => acc + item.count, 0);
-  const totalPrice = cart.reduce((acc, item) => acc + item.count * item.price, 0);
+  // Memoized totals for performance
+  const totalItems = useMemo(() => cart.reduce((acc, item) => acc + item.count, 0), [cart]);
+  const totalPrice = useMemo(() => cart.reduce((acc, item) => acc + item.count * item.price, 0), [cart]);
 
   return (
     <CartContext.Provider value={{

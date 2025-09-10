@@ -73,7 +73,7 @@ function Login() {
                         />
                     </div>
 
-                    <p>If you don't have an account? Please Register.</p>
+                    <p className='login-error'>If you don't have an account? Please Register.</p>
 
                     <div className='login-buttons'>
                         <button type="submit" className='login-button'>Submit</button>
