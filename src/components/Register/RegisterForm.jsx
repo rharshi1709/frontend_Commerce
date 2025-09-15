@@ -21,7 +21,7 @@ function RegisterForm() {
       const res = await fetch('https://backend-commerce-1.onrender.com/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userDetails),
+        body: JSON.stringify(userDetails)
       });
 
       const data = await res.json();
@@ -67,7 +67,7 @@ function RegisterForm() {
               id="password"
               type="password"
               value={password}
-              required
+              require
               autoComplete="off"
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}

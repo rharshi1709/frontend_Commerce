@@ -5,6 +5,7 @@
   background-color: #f5f5f5;
   min-height: 100vh;
   min-width: 100vw;
+  margin:5px;
 }
 
 .products-card {
@@ -63,13 +64,25 @@
 /* Responsive for mobile */
 @media (max-width: 768px) {
   .products-card {
+     min-height: 50vh;
+  min-width: 50vw;
+  margin:10px;
     flex-direction: column; /* stack on mobile */
     align-items: center;
   }
+ .detail-view {
 
+  text-align: center;
+  padding-top:80px ;
+  min-height: 50vh;
+  min-width: 50vw;
+}
+.products-card button {
+align-self: center;
+}
   .products-card img {
-    width: 100%;
-    max-width: 400px;
+    width: 50%;
+   height: 50%;
   }
 
   .product-details {

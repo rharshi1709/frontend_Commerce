@@ -13,7 +13,7 @@ function DetailedView() {
            const url=`https://backend-commerce-1.onrender.com/api/product/${id}`
            const response =await fetch(url)
            const data=await response.json()
-           console.log(data)
+           console.log(response)
            setProduct(data.data)
         };
         getProduct();

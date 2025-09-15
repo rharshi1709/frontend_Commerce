@@ -132,7 +132,7 @@ function Products() {
             <div className="flex-container">
               {currentItems.map((product) => (
                 <div key={product._id} className='product-card'>
-                  <Link to={`/product/${product._id}`}>
+                  <Link to={`/product/${product.id}`}>
                     <img src={product.image} alt={product.name} />
                     <p>{product.name}</p>
                     <p>Price: {product.price}</p>
@@ -141,7 +141,7 @@ function Products() {
 
                   {getQuantity(product._id) > 0 ? (
                     <div className="cart-buttons">
-                      <button onClick={() => removeFromCart(product._id)}>-</button>
+                      <button onClick={() => removeFromCart(product.id)}>-</button>
                       <span>{getQuantity(product._id)}</span>
                       <button onClick={() => addToCart(product)}>+</button>
                     </div>
