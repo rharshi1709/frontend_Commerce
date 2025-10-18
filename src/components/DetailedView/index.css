@@ -1,5 +1,6 @@
 .detail-view {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
@@ -18,6 +19,15 @@
   max-width: 900px;
   width: 100%;
   gap: 20px;
+}
+.review-section {
+  width: 72%;
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 
 .products-card img {
@@ -61,6 +71,7 @@
   background-color: #0088cc;
 }
 
+
 /* Responsive for mobile */
 @media (max-width: 768px) {
   .products-card {
@@ -76,7 +87,13 @@
   padding-top:80px ;
   min-height: 50vh;
   min-width: 50vw;
+
 }
+
+.review-section {
+  margin-top: 20px;
+} 
+
 .products-card button {
 align-self: center;
 }

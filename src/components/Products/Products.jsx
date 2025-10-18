@@ -131,13 +131,13 @@ function Products() {
           <>
             <div className="flex-container">
               {currentItems.map((product) => (
-                <div key={product._id} className='product-card'>
-                  <Link to={`/product/${product.id}`}>
+                <Link to={`/product/${product.id}`} key={product._id} className='product-card'>
+                  <div className="product-image">
                     <img src={product.image} alt={product.name} />
                     <p>{product.name}</p>
                     <p>Price: {product.price}</p>
                     <p>Rating: {product.rating}</p>
-                  </Link>
+                  </div>
 
                   {getQuantity(product._id) > 0 ? (
                     <div className="cart-buttons">
@@ -148,7 +148,7 @@ function Products() {
                   ) : (
                     <button onClick={() => addToCart(product)}>Add to Cart</button>
                   )}
-                </div>
+                </Link>
               ))}
             </div>
 

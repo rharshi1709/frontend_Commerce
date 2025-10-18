@@ -14,11 +14,13 @@ import Cart from './components/Cart.jsx'
 import { CartProvider } from './components/CartContext.jsx' // Import CartProvider
 import Payment from './components/Payment.jsx'
 
+
 function App() {
   return (
     <CartProvider> {/* Wrap entire app in CartProvider */}
       <Navbar/>
       <Routes>
+        
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/about" element={<ProtectedRoute><AboutUs /></ProtectedRoute>} />
         <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
