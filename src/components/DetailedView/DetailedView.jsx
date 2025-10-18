@@ -144,7 +144,10 @@ function DetailedView() {
         </div>
 
         {reviews.length === 0 ? (
-          <p>No reviews yet. Be the first to review!</p>
+          <p 
+            style={{ fontStyle: 'italic', color: 'black', margin:'10px 10px' }}
+
+          >No reviews yet. Be the first to review!</p>
         ) : (
           reviews.map((review) => (
             <div
@@ -155,20 +158,22 @@ function DetailedView() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                margin:'0 10px',
+                fontWeight:'500'
               }}
             >
               <p>{review.review}</p>
               <button
                 onClick={() => handleDeleteReview(review._id)}
                 style={{
-                  backgroundColor: 'red',
+                  backgroundColor: 'transparent',
                   color: 'white',
                   border: 'none',
                   borderRadius: '6px',
                   padding: '5px 10px',
                 }}
               >
-                Delete
+                ❌
               </button>
             </div>
           ))
