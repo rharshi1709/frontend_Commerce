@@ -21,11 +21,13 @@ function Login() {
             const url = 'https://backend-commerce-1.onrender.com/api/login';
             const options = {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json"
+                 },
                 body: JSON.stringify(userDetails),
             };
             const res = await fetch(url, options);
             const data = await res.json();
+            console.log(data)
             if (res.ok) {
                 const token = data.jwToken;
                 onSuccess(token);

@@ -1,9 +1,16 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useMemo, useEffect } from "react";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(()=>{
+    const storedCart = localStorage.getItem('cart');
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   // Add a product to the cart
   const addToCart = (product) => {
