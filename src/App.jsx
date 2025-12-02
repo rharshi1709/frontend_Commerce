@@ -7,18 +7,23 @@ import ContactUs from './components/ContactUs/ContactUs'
 import NotFound from './components/NotFound/NotFound'
 import Products from './components/Products/Products'
 import DetailedView from './components/DetailedView/DetailedView'
-import Login from './components/Login/Login'
+
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 import Cart from './components/Cart.jsx'
-import { CartProvider } from './components/CartContext.jsx' // Import CartProvider
+import { CartProvider } from './components/CartContext.jsx'
 import Payment from './components/Payment.jsx'
+import Login from './components/Login/Login.jsx'
+// import OrderHistory from './components/OrderHistory/OrderHistory'
+// import UserProfile from './components/UserProfile/UserProfile'
+// import Wishlist from './components/Wishlist/Wishlist'
 
 
 function App() {
   return (
-    <CartProvider> {/* Wrap entire app in CartProvider */}
-      <Navbar/>
+    <CartProvider>
+      
       <Routes>
         
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -26,12 +31,18 @@ function App() {
         <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
         <Route path="/product/:id" element={<ProtectedRoute><DetailedView /></ProtectedRoute>} />
         <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
-        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} /> {/* Added Cart route */}
-      <Route path="/payment" element={<ProtectedRoute><Payment/></ProtectedRoute>} />
+        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+        {/* <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+        <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
+        // <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} /> */}
+        <Route path="/payment" element={<ProtectedRoute><Payment/></ProtectedRoute>} />
+         {/* <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} /> */}
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+     
     </CartProvider>
   )
 }

@@ -19,10 +19,19 @@
     width: 50px;
 }
 
-.navbar h2{
+.logo{
     color: #FFD700; /* Gold */
     font-family: '';
+    font-size: 28px;
+      padding: 5px;
+    font-weight: bold;
     font-style: italic;
+}
+.logo:hover{
+    color:white; /* Navy hover */
+    background-color:transperent; /* Gold background on hover */
+    padding: 5px;
+    border-radius: 5px;
 }
 
 /* nav links for desktop */

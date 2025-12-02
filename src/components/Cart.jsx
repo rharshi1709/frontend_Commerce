@@ -3,6 +3,7 @@ import { CartContext } from "./CartContext";
 import "./Cart.css";
 import Payment from "./Payment";
 import { Navigate, useNavigate } from "react-router";
+import Navbar from "./Navbar/Navbar";
 
 function Cart() {
   const { cart, addToCart, removeFromCart, clearCart, totalItems, totalPrice ,deleteItem} = useContext(CartContext);
@@ -12,6 +13,7 @@ navigate("/payment")
   }
   return (
     <div className="cart-container">
+      <Navbar/>
       <div className="cart-card">
         <h2>Your Cart</h2>
 

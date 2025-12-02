@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './index.css';
 import { useParams } from 'react-router';
+import { CartContext } from '../CartContext';
+import Cookies from 'js-cookie';
 import ImageMagnifier from '../Image/Image';
+import Navbar from '../Navbar/Navbar';
 
 function DetailedView() {
+  // const { addToCart } = useContext(CartContext);
+   const { addToCart, removeFromCart, cart } = useContext(CartContext)
   const [product, setProduct] = useState({});
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState('');
+  // const [quantity, setQuantity] = useState(1);
+  // const [wishlistLoading, setWishlistLoading] = useState(false);
 
   const { id } = useParams();
-
+ const getQuantity = (id) => {
+  const item = cart.find(p => p._id === id)
+  return (item? item.count : 0)
+}
   
   useEffect(() => {
     const getProduct = async () => {
@@ -25,7 +35,7 @@ function DetailedView() {
     getProduct();
   }, [id]);
 
-  // ✅ Fetch reviews for product
+ 
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -40,7 +50,7 @@ function DetailedView() {
     getReviews();
   }, [id]);
 
-  // ✅ Create new review
+
   const handleCreateReview = async () => {
     if (!newReview.trim()) return alert('Please write a review before submitting.');
 
@@ -66,7 +76,6 @@ function DetailedView() {
     }
   };
 
-  // ✅ Delete review
   const handleDeleteReview = async (reviewId) => {
     try {
       const url = `https://backend-commerce-1.onrender.com/api/review/${reviewId}`;
@@ -83,8 +92,47 @@ function DetailedView() {
     }
   };
 
+ 
+  // const handleAddToCart = () => {
+  //   for (let i = 0; i < quantity; i++) {
+  //     addToCart(product);
+  //   }
+  //   setQuantity(1);
+  //   alert(`${quantity} item(s) added to cart!`);
+  // };
+
+ 
+  // const handleAddToWishlist = async () => {
+  //   try {
+  //     const token = Cookies.get('jwt_token');
+  //     if (!token) {
+  //       alert('Please login to add items to wishlist');
+  //       return;
+  //     }
+
+  //     setWishlistLoading(true);
+
+  //     const response = await fetch(
+  //       'https://backend-commerce-1.onrender.com/api/wishlist'
+  //     );
+
+  //     const data = await response.json();
+  //     if (response.ok && data.ok) {
+  //       alert('Added to wishlist!');
+  //     } else {
+  //       alert(data.message || 'Failed to add to wishlist');
+  //     }
+  //   } catch (err) {
+  //     console.error('Error adding to wishlist:', err);
+  //     alert('Error adding to wishlist');
+  //   } finally {
+  //     setWishlistLoading(false);
+  //   }
+  // };
+
   return (
     <div className="detail-view">
+      <Navbar/>
       <div className="products-card">
         <div className="flex">
           <ImageMagnifier
@@ -104,10 +152,22 @@ function DetailedView() {
           <h2>DESCRIPTION:</h2>
           <p>{product.description}</p>
           <h2>PRICE:</h2>
-          <p>₹{product.price}</p>
+          <p className="price-text">₹{product.price}</p>
           <h2>RATING:</h2>
-          <p>⭐{product.rating}</p>
-          <button>Add to Cart</button>
+          <p>⭐{product.rating || 'N/A'}</p>
+          
+        {getQuantity(product._id) > 0 ? (
+                    <div className="cart-buttons">
+                      <button onClick={() => removeFromCart(product._id)}>-</button>
+                      <span>{getQuantity(product._id)}</span>
+                      <button onClick={() => addToCart(product)}>+</button>
+                    </div>
+                  ) : (
+                    <button onClick={() => addToCart(product)}>Add to Cart</button>
+                  )}
+                  
+                 
+         
         </div>
       </div>
 

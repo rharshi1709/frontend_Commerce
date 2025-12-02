@@ -4,65 +4,86 @@ import { createContext, useState, useMemo, useEffect } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(()=>{
-    const storedCart = localStorage.getItem('cart');
+  // ✅ Get the current user info from localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user?.email || "guest"; // use "guest" if no user is logged in
+
+  console.log(email)
+  // ✅ Load user's specific cart
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem(`cart_${email}`);
     return storedCart ? JSON.parse(storedCart) : [];
   });
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
 
-  // Add a product to the cart
+  // ✅ Save to localStorage whenever cart changes
+  useEffect(() => {
+    localStorage.setItem(`cart_${email}`, JSON.stringify(cart));
+  }, [cart, email]);
+
+  // ✅ Add product
   const addToCart = (product) => {
-    const existing = cart.find(item => item._id === product._id);
+    const existing = cart.find((item) => item._id === product._id);
 
     if (existing) {
-      setCart(cart.map(item =>
-        item._id === product._id ? { ...item, count: item.count + 1 } : item
-      ));
+      setCart(
+        cart.map((item) =>
+          item._id === product._id
+            ? { ...item, count: item.count + 1 }
+            : item
+        )
+      );
     } else {
-      setCart([...cart, { ...product, count: 1 }]);
+      setCart([...cart, { ...product, count: 1 }]); // start count at 1
     }
   };
 
-  // Remove a product from the cart
+  // ✅ Remove one quantity of a product
   const removeFromCart = (id) => {
-    const existing = cart.find(item => item._id === id);
+    const existing = cart.find((item) => item._id === id);
     if (!existing) return;
 
     if (existing.count === 1) {
-      setCart(cart.filter(item => item._id !== id));
+      setCart(cart.filter((item) => item._id !== id));
     } else {
-      setCart(cart.map(item =>
-        item._id === id ? { ...item, count: item.count - 1 } : item
-      ));
+      setCart(
+        cart.map((item) =>
+          item._id === id ? { ...item, count: item.count - 1 } : item
+        )
+      );
     }
   };
- const deleteItem =(id)=>{
-    const item= cart.find(it=> it._id===id)
-    if (item){
-      setCart(cart.filter(item =>
-        item._id !== id 
-      ))
-    }
- }
-  // Clear entire cart
+
+  // ✅ Delete entire item
+  const deleteItem = (id) => {
+    setCart(cart.filter((item) => item._id !== id));
+  };
+
+  // ✅ Clear entire cart
   const clearCart = () => setCart([]);
 
-  // Memoized totals for performance
-  const totalItems = useMemo(() => cart.reduce((acc, item) => acc + item.count, 0), [cart]);
-  const totalPrice = useMemo(() => cart.reduce((acc, item) => acc + item.count * item.price, 0), [cart]);
+  // ✅ Totals (memoized)
+  const totalItems = useMemo(
+    () => cart.reduce((acc, item) => acc + item.count, 0),
+    [cart]
+  );
+
+  const totalPrice = useMemo(
+    () => cart.reduce((acc, item) => acc + item.count * item.price, 0),
+    [cart]
+  );
 
   return (
-    <CartContext.Provider value={{
-      cart,
-      addToCart,
-      removeFromCart,
-      clearCart,
-      deleteItem,
-      totalItems,
-      totalPrice
-    }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        deleteItem,
+        totalItems,
+        totalPrice,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

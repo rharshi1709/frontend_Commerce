@@ -4,6 +4,7 @@
   background-color: #E5E5E5; /* Light Gray background */
   min-width: 100vw;
   padding-top: 35px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
 }

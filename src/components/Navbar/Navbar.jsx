@@ -10,7 +10,7 @@ function Navbar() {
   const { cart } = useContext(CartContext); // Access cart
 
   // Calculate total items in cart
-  const totalItems = cart.reduce((acc, item) => acc + item.count, 0);
+  const totalItems = cart.length
 
   function logout() {
     Cookies.remove('jwt_token');
@@ -19,7 +19,7 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <h2>ShopEasy</h2>
+      <a className="logo" href="/">ShopEasy</a>
       <button
         className="hamburger"
         onClick={() => setOpen(!open)}
@@ -42,6 +42,10 @@ function Navbar() {
         <Link className="link" to="/contact" onClick={() => setOpen(false)}>
           ContactUs
         </Link>
+
+       
+
+        
 
         {/* Cart link with item count */}
         <Link className="link" to="/cart" onClick={() => setOpen(false)}>
