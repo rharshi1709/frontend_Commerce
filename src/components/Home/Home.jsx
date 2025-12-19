@@ -10,7 +10,7 @@ function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       window.location.reload()
-    }, 1800000) // 30 minutes in milliseconds
+    },10000000) // 30 minutes in milliseconds
 
     return () => clearTimeout(timer)
   }, [])
