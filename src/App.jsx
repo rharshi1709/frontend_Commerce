@@ -23,7 +23,7 @@ import Login from './components/Login/Login.jsx'
 function App() {
   return (
     <CartProvider>
-      <Navbar />
+      
       <Routes>
         
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
