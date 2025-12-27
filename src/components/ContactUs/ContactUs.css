@@ -1,117 +1,157 @@
-/* Container */
+/* ---------- PAGE ---------- */
+.contact-top {
+  background: #f5f6fa;
+  min-height: 100vh;
+}
+
+/* ---------- CONTACT SECTION ---------- */
 .contact-container {
- width: 100vw;
-  display: flex;
-  min-height: 60vh;
-  flex-direction: column;
+  max-width: 1100px;
+  margin: 80px auto 40px;
+  display:flex;
   justify-content: center;
-  align-items: center;
-  background-color:white;
-  text-align: center;
-  margin-top: 50px;
-  padding: 20px;
-  
-}
-.contact-top{
-  display: flex ;
+  align-items:center ;
   flex-direction: column;
-  align-items: center;
+  padding: 0 20px;
+  text-align: center;
 }
+
 .contact-container h2 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #333;
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  color: #222;
 }
 
 .contact-container p {
   font-size: 1.1rem;
   color: #555;
-  max-width: 600px;
-  margin-bottom: 20px;
+  max-width: 650px;
+  margin: 0 auto 50px;
+  line-height: 1.6;
 }
-.contact-info{
-    display: flex;
-    gap: 20px;
+
+/* ---------- INFO CARDS ---------- */
+.contact-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 80px;
 }
-/* Contact Box */
+
 .contact-box {
+  display: flex;
+flex-direction: column;
+align-items: center;
+justify-items: center;
+justify-content: center;
+align-content: center;
   background: #fff;
-  padding: 20px ;
+  padding: 35px 25px;
+  width: 50%;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-  width: 90%;
-  max-width: 300px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
 .contact-box h3 {
   font-size: 1.4rem;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   color: #222;
 }
 
 .contact-box p {
-  font-size: 1.1rem;
-  font-weight: 500;
+ 
+  font-size: 1.05rem;
   color: #444;
+  line-height: 1.5;
 }
 
-.contact-box a {
-  color: #007BFF;
-  text-decoration: none;
+/* ---------- FORM ---------- */
+.contact-form {
+  max-width: 550px;
+  margin: 0 auto 80px;
+  padding: 35px 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  display: flex;
+
+ 
+  flex-direction: column;
 }
 
-.contact-box a:hover {
-  text-decoration: underline;
+.contact-form h2 {
+  text-align: center;
+  margin-bottom: 30px;
 }
-/* ---- Bio text ---- */
 
-.contact-form{
-    display: flex;
+.contact-form label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #222;
+}
+
+.contact-form input,
+.contact-form textarea {
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.contact-form textarea {
+  resize: none;
+}
+
+.contact-form button {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 1rem;
+  background: #f3e413;
+  width: 50%;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-center{
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+}
+.contact-form button:hover {
+  background: #1e40af;
+}
+
+.contact-form p {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .contact-info {
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    max-height: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    width: 50vw;
+    gap: 40px;
+  }
+
+  .contact-container {
+    margin-top: 60px;
+  }
 }
-.contact-form input, .contact-form textarea{
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    width: 100%;
-    box-sizing: border-box;
-} 
-.contact-form label{
-    font-size: 1rem;
-    font-weight: 500;
-    color: #222;
-}
-/* Responsive */
-@media (max-width: 600px) {
+
+@media (max-width: 500px) {
   .contact-container h2 {
     font-size: 2rem;
   }
-.contact-info{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+
   .contact-container p {
     font-size: 1rem;
   }
 
-  .contact-box h3 {
-    font-size: 1.2rem;
-  }
-
-  .contact-box p {
-    font-size: 1rem;
+  .contact-form {
+    padding: 25px 20px;
   }
 }
-

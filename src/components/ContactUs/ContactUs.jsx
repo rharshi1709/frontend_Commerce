@@ -27,7 +27,10 @@ function ContactUs() {
       console.log(data);
 
       if (res.ok) {
-        alert(res.message)
+        alert(data.message || "Message sent successfully");
+        setName('');
+        setPhone('');
+        setMessage('');
       } else {
         alert(data.message || "Invalid email or password")
         setErr(data.message || "Invalid email or password");
@@ -41,7 +44,7 @@ function ContactUs() {
   return (
     <div className='contact-top'>
         <Navbar/>
-     <div class="contact-container">
+     <div className="contact-container">
 
   <h2>Contact Us</h2>
   <p>
@@ -49,34 +52,36 @@ function ContactUs() {
     feel free to reach out to us.
   </p>
 
-  <div class="contact-info">
-    <div class="contact-box">
+  <div className="contact-info">
+    <div className="contact-box">
       <h3>📞 Phone</h3>
       <p>+91 98765 43210</p>
     </div>
 
-    <div class="contact-box">
+    <div className="contact-box">
       <h3>📧 Email</h3>
       <p>support@yourstore.com</p>
     </div>
 
-    <div class="contact-box">
+    <div className="contact-box">
       <h3>📍 Address</h3>
       <p>123 Main Street, Hyderabad, Telangana, India</p>
     </div>
   </div>
 </div>
 <div>
-  <form onSubmit={onSubmitContact()} class="contact-form">
+  <form onSubmit={onSubmitContact} className="contact-form">
     <h2>Send Us a Message</h2>
-    <label for="name">Name</label>
+    <label htmlFor="name">Name</label>
     <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} name="name" required />
-    <label for="phone">Phone</label>
+    <label htmlFor="phone">Phone</label>
     <input type="number" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} name="phone" required />
-    <label for="message">Message</label>
+    <label htmlFor="message">Message</label>
     <textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} name="message" rows="5" required></textarea>
     <p>{err}</p>
-    <button type="submit">Submit</button>
+    <div className='btn-center'>
+      <button type="submit">Submit</button>
+    </div>
   </form>
 </div>
 
