@@ -69,7 +69,7 @@ function Checkout() {
 
     try {
       const jwtToken = Cookies.get('jwt_token');
-      
+
       // 1. Create Razorpay Order
       const res = await fetch(`${API_BASE_URL}/payment/create-order`, {
         method: 'POST',
@@ -91,7 +91,7 @@ function Checkout() {
 
       // 2. Open Razorpay Checkout
       const options = {
-        key: 'rzp_test_placeholder', // Should be from backend or env
+        key: import.meta.env.VITE_RAZORPAY_KEY || 'rzp_test_placeholder',
         amount: order.amount,
         currency: order.currency,
         name: 'ShopEasy',

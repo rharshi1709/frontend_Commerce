@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./login.css";
+import API_BASE_URL from "../../config.js";
 
 function Login() {
   const [password, setPassword] = useState("");
@@ -25,7 +26,7 @@ function Login() {
 
     try {
       const userDetails = { email, password };
-      const url = "https://backend-commerce-1.onrender.com/api/login";
+      const url = `${API_BASE_URL}/login`;
 
       const options = {
         method: "POST",

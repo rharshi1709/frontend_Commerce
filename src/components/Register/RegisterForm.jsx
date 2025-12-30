@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './RegisterForm.css';
 import { useNavigate, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import API_BASE_URL from '../../config.js';
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
@@ -18,7 +19,7 @@ function RegisterForm() {
     event.preventDefault();
     try {
       const userDetails = { username, password, email };
-      const res = await fetch('https://backend-commerce-1.onrender.com/api/register', {
+      const res = await fetch(`${API_BASE_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userDetails)
@@ -87,10 +88,10 @@ function RegisterForm() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
- <p className='login-error'>If you have already Registered? Please Login</p>
+          <p className='login-error'>If you have already Registered? Please Login</p>
           <div className="register-buttons">
             <button type="submit" className="register-button">Submit</button>
-           
+
             <button
               type="button"
               className="register-button"
@@ -101,7 +102,7 @@ function RegisterForm() {
           </div>
 
           {error && <p className="register-error">{error}</p>}
-          
+
         </form>
       </div>
     </div>
