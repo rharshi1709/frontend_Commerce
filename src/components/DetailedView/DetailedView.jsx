@@ -4,7 +4,8 @@ import { useParams } from 'react-router';
 import { CartContext } from '../CartContext';
 import Cookies from 'js-cookie';
 import ImageMagnifier from '../Image/Image';
-import Navbar from '../Navbar/Navbar';
+import { toast } from 'react-toastify';
+import API_BASE_URL from '../../config';
 
 function DetailedView() {
   // const { addToCart } = useContext(CartContext);
@@ -24,7 +25,7 @@ function DetailedView() {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const url = `https://backend-commerce-1.onrender.com/api/product/${id}`;
+        const url = `${API_BASE_URL}/product/${id}`;
         const response = await fetch(url);
         const data = await response.json();
         setProduct(data.data);
@@ -39,7 +40,7 @@ function DetailedView() {
   useEffect(() => {
     const getReviews = async () => {
       try {
-        const url = `https://backend-commerce-1.onrender.com/api/review/${id}`;
+        const url = `${API_BASE_URL}/review/${id}`;
         const response = await fetch(url);
         const data = await response.json();
         setReviews(data.data || []);
@@ -52,10 +53,10 @@ function DetailedView() {
 
 
   const handleCreateReview = async () => {
-    if (!newReview.trim()) return alert('Please write a review before submitting.');
+    if (!newReview.trim()) return toast.error('Please write a review before submitting.');
 
     try {
-      const url = `https://backend-commerce-1.onrender.com/api/review/${id}`;
+      const url = `${API_BASE_URL}/review/${id}`;
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,28 +68,31 @@ function DetailedView() {
       if (response.ok) {
         setReviews([...reviews, data.data]); // instantly update list
         setNewReview('');
+        toast.success('Review posted!');
       } else {
-        alert(data.message || 'Failed to post review.');
+        toast.error(data.message || 'Failed to post review.');
       }
     } catch (e) {
       console.log('Error creating review:', e);
-      alert(e.message);
+      toast.error('Error posting review');
     }
   };
 
   const handleDeleteReview = async (reviewId) => {
     try {
-      const url = `https://backend-commerce-1.onrender.com/api/review/${reviewId}`;
+      const url = `${API_BASE_URL}/review/${reviewId}`;
       const response = await fetch(url, { method: 'DELETE' });
       const data = await response.json();
 
       if (response.ok) {
         setReviews(reviews.filter((r) => r._id !== reviewId));
+        toast.info('Review deleted');
       } else {
-        alert(data.message || 'Failed to delete review.');
+        toast.error(data.message || 'Failed to delete review.');
       }
     } catch (e) {
       console.log('Error deleting review:', e);
+      toast.error('Error deleting review');
     }
   };
 
@@ -132,7 +136,6 @@ function DetailedView() {
 
   return (
     <div className="detail-view">
-      <Navbar/>
       <div className="products-card">
         <div className="flex">
           <ImageMagnifier
@@ -158,12 +161,12 @@ function DetailedView() {
           
         {getQuantity(product._id) > 0 ? (
                     <div className="cart-buttons">
-                      <button onClick={() => removeFromCart(product._id)}>-</button>
+                      <button onClick={() => { removeFromCart(product._id); toast.info('Removed from cart'); }}>-</button>
                       <span>{getQuantity(product._id)}</span>
-                      <button onClick={() => addToCart(product)}>+</button>
+                      <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>+</button>
                     </div>
                   ) : (
-                    <button onClick={() => addToCart(product)}>Add to Cart</button>
+                    <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>Add to Cart</button>
                   )}
                   
                  

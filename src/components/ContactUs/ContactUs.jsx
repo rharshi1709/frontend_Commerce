@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../Navbar/Navbar'
 import './ContactUs.css'
 import { useState } from 'react'
 function ContactUs() {
@@ -43,7 +42,6 @@ function ContactUs() {
   }
   return (
     <div className='contact-top'>
-        <Navbar/>
      <div className="contact-container">
 
   <h2>Contact Us</h2>

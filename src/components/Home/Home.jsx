@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
-import Navbar from '../Navbar/Navbar.jsx'
 function Home() {
   const navigate = useNavigate()
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -40,7 +39,6 @@ function Home() {
 
   return (
     <div>
-      <Navbar/>
       {/* Hero Section */}
       <div className='home-hero'>
         <div className='hero-content'>

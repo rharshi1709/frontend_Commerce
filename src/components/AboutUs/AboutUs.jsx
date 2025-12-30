@@ -1,11 +1,9 @@
 import React from 'react'
-import Navbar from '../Navbar/Navbar'
 import './AboutUs.css'
 
 function AboutUs() {
   return (
     <div className='about-section'>
-      <Navbar/>
       <div>
         <div className="about">
           <img 

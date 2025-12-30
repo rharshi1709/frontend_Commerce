@@ -2,10 +2,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import './Products.css';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext.jsx';
-import Navbar from '../Navbar/Navbar.jsx';
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+import API_BASE_URL from '../../config';
 
 function Products() {
+
   const { addToCart, removeFromCart, cart } = useContext(CartContext);
+ const token = Cookies.get('jwt_token');
 
   const [categoryGrp, setCategoryGrp] = useState('all');
   const [category, setCategory] = useState([]);
@@ -58,8 +62,14 @@ function Products() {
     async function getProducts() {
       setLoading(true);
       try {
-        const url = 'https://backend-commerce-1.onrender.com/api/products';
-        const response = await fetch(url);
+        const options={
+          method:'GET',
+          headers:{
+            'Authorization':`Bearer ${token}`
+          }
+        }
+        const url = `${API_BASE_URL}/products`;
+        const response = await fetch(url, options);
         const data = await response.json();
         setProducts(data.data);
       } catch (error) {
@@ -73,7 +83,7 @@ function Products() {
   useEffect(() => {
     async function getCategory() {
       try {
-        const url = 'https://backend-commerce-1.onrender.com/api/category';
+        const url = `${API_BASE_URL}/category`;
         const response = await fetch(url);
         const data = await response.json();
         setCategory(data.data);
@@ -86,7 +96,6 @@ function Products() {
 
   return (
     <div className='product'>
-      <Navbar />
       <div className='filter'>
         <h2>Filters</h2>
 
@@ -145,12 +154,12 @@ function Products() {
 
                   {getQuantity(product._id) > 0 ? (
                     <div className='cart-buttons'>
-                      <button onClick={() => removeFromCart(product._id)}>-</button>
+                      <button onClick={() => { removeFromCart(product._id); toast.info('Removed from cart'); }}>-</button>
                       <span>{getQuantity(product._id)}</span>
-                      <button onClick={() => addToCart(product)}>+</button>
+                      <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>+</button>
                     </div>
                   ) : (
-                    <button onClick={() => addToCart(product)}>Add to Cart</button>
+                    <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>Add to Cart</button>
                   )}
                 </div>
               ))}

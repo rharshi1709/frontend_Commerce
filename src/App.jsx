@@ -15,15 +15,19 @@ import Cart from './components/Cart.jsx'
 import { CartProvider } from './components/CartContext.jsx'
 import Payment from './components/Payment.jsx'
 import Login from './components/Login/Login.jsx'
-// import OrderHistory from './components/OrderHistory/OrderHistory'
-// import UserProfile from './components/UserProfile/UserProfile'
-// import Wishlist from './components/Wishlist/Wishlist'
+import OrderHistory from './components/OrderHistory/OrderHistory'
+import UserProfile from './components/UserProfile/UserProfile'
+import Wishlist from './components/Wishlist/Wishlist'
+import Checkout from './components/Checkout/Checkout'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 function App() {
   return (
     <CartProvider>
-      
+      <Navbar />
+      <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -32,12 +36,11 @@ function App() {
         <Route path="/product/:id" element={<ProtectedRoute><DetailedView /></ProtectedRoute>} />
         <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
         <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        {/* <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path="/orders" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
-        // <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
-        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} /> */}
+        <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
         <Route path="/payment" element={<ProtectedRoute><Payment/></ProtectedRoute>} />
-         {/* <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} /> */}
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<Login/>} />
         <Route path="*" element={<NotFound />} />

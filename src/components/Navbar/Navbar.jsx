@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import Cookies from 'js-cookie';
 import { CartContext } from '../CartContext.jsx'; // Import CartContext
+import { FaShoppingCart, FaUser, FaHeart, FaClipboardList } from 'react-icons/fa';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <a className="logo" href="/">ShopEasy</a>
+      <Link className="logo" to="/">ShopEasy</Link>
       <button
         className="hamburger"
         onClick={() => setOpen(!open)}
@@ -43,13 +44,22 @@ function Navbar() {
           ContactUs
         </Link>
 
-       
+        <Link className="link" to="/wishlist" title="Wishlist" onClick={() => setOpen(false)}>
+          <FaHeart />
+        </Link>
 
-        
+        <Link className="link" to="/orders" title="Orders" onClick={() => setOpen(false)}>
+          <FaClipboardList />
+        </Link>
 
-        {/* Cart link with item count */}
-        <Link className="link" to="/cart" onClick={() => setOpen(false)}>
-          Cart ({totalItems})
+        <Link className="link" to="/profile" title="Profile" onClick={() => setOpen(false)}>
+          <FaUser />
+        </Link>
+
+        {/* Cart link with icon and item count */}
+        <Link className="link cart-link" to="/cart" onClick={() => setOpen(false)}>
+          <FaShoppingCart />
+          {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
         </Link>
 
         <button onClick={logout} className="button">
