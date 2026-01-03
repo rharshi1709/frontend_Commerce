@@ -44,9 +44,9 @@ function Navbar() {
           ContactUs
         </Link>
 
-        <Link className="link" to="/wishlist" title="Wishlist" onClick={() => setOpen(false)}>
+        {/* <Link className="link" to="/wishlist" title="Wishlist" onClick={() => setOpen(false)}>
           <FaHeart />
-        </Link>
+        </Link> */}
 
         <Link className="link" to="/orders" title="Orders" onClick={() => setOpen(false)}>
           <FaClipboardList />

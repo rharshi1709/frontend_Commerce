@@ -10,7 +10,7 @@ function Products() {
 
   const { addToCart, removeFromCart, cart } = useContext(CartContext);
  const token = Cookies.get('jwt_token');
-
+console.log(token);
   const [categoryGrp, setCategoryGrp] = useState('all');
   const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([]);
@@ -70,6 +70,7 @@ function Products() {
         }
         const url = `${API_BASE_URL}/products`;
         const response = await fetch(url, options);
+        console.log(response);
         const data = await response.json();
         setProducts(data.data);
       } catch (error) {

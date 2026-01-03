@@ -39,12 +39,14 @@ function Login() {
 
       const res = await fetch(url, options);
       const data = await res.json();
+      
       console.log(data);
 
       if (res.ok) {
         // ✅ Assuming backend returns { token, user: { email } }
-        const token = data.token;
+        const token = data.jwToken;
         const userEmail = data.user?.email || email; // fallback if backend doesn't return it
+       
         onSuccess(token, userEmail);
       } else {
         setError(data.message || "Invalid email or password");
