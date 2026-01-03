@@ -5,112 +5,73 @@ import "./login.css";
 import API_BASE_URL from "../../config.js";
 
 function Login() {
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Success function - save both token & user info
-  const onSuccess = (token, userEmail) => {
-    Cookies.set("jwt_token", token, { expires: 30 });
-
-    // ✅ Save user details (so CartContext can use the email)
-    localStorage.setItem("user", JSON.stringify({ email: userEmail }));
-
-    navigate("/", { replace: true });
-  };
-
-  const onSubmitForm = async (event) => {
-    event.preventDefault();
-    setError(""); // Clear previous errors
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    setError("");
 
     try {
-      const userDetails = { email, password };
-      const url = `${API_BASE_URL}/login`;
-
-      const options = {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
-        body: JSON.stringify(userDetails),
-      };
+        body: JSON.stringify({ email, password }),
+      });
 
-      const res = await fetch(url, options);
-      const data = await res.json();
-      
-      console.log(data);
+      const data = await response.json();
 
-      if (res.ok) {
-        // ✅ Assuming backend returns { token, user: { email } }
-        const token = data.jwToken;
-        const userEmail = data.user?.email || email; // fallback if backend doesn't return it
-       
-        onSuccess(token, userEmail);
-      } else {
-        setError(data.message || "Invalid email or password");
+      if (!response.ok) {
+        setError(data.message || "Login failed");
+        return;
       }
+
+      // ✅ Store JWT safely for Vercel
+      Cookies.set("jwt_token", data.jwToken, {
+        expires: 30,
+        secure: true,      // required for https (Vercel)
+        sameSite: "None",  // required for cross-site
+      });
+
+      navigate("/", { replace: true });
     } catch (err) {
-      console.error("Login error:", err);
-      setError("Network error or server is not responding");
+      setError("Server not responding");
+      console.error(err);
     }
   };
 
-  const jwtToken = Cookies.get("jwt_token");
-  if (jwtToken !== undefined) {
+  const token = Cookies.get("jwt_token");
+  if (token) {
     return <Navigate to="/" replace />;
   }
 
   return (
     <div className="login-form-container">
-      <div className="login-card">
-        <h1 className="login-title">Login Form</h1>
-        <form onSubmit={onSubmitForm}>
-          <div className="login-item">
-            <label htmlFor="email" className="login-label">EMAIL</label>
-            <input
-              className="login-input"
-              id="email"
-              value={email}
-              type="email"
-              required
-              placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+      <form onSubmit={onSubmitForm}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-          <div className="login-item">
-            <label htmlFor="pass" className="login-label">PASSWORD</label>
-            <input
-              className="login-input"
-              id="pass"
-              value={password}
-              type="password"
-              required
-              placeholder="Enter your password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          required
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <p className="login-note">
-            If you don't have an account? Please Register.
-          </p>
+        <button type="submit">Login</button>
 
-          <div className="login-buttons">
-            <button type="submit" className="login-button">Submit</button>
-            <button
-              type="button"
-              className="login-button"
-              onClick={() => navigate("/register", { replace: true })}
-            >
-              Register
-            </button>
-          </div>
-
-          {error && <p className="login-error">{error}</p>}
-        </form>
-      </div>
+        {error && <p className="login-error">{error}</p>}
+      </form>
     </div>
   );
 }

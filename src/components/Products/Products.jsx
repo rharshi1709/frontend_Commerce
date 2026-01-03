@@ -1,195 +1,62 @@
-import React, { useEffect, useState, useContext } from 'react';
-import './Products.css';
-import { Link } from 'react-router-dom';
-import { CartContext } from '../CartContext.jsx';
-import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
-import API_BASE_URL from '../../config';
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import API_BASE_URL from "../../config";
+import { toast } from "react-toastify";
 
 function Products() {
-
-  const { addToCart, removeFromCart, cart } = useContext(CartContext);
- const token = Cookies.get('jwt_token');
-console.log(token);
-  const [categoryGrp, setCategoryGrp] = useState('all');
-  const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([]);
-
-  const [name, setName] = useState('');
-  const [sort, setSort] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
-
-  const getQuantity = (id) => {
-    const item = cart.find(p => p._id === id);
-    return item ? item.count : 0;
-  };
-
-  let filteredArray = products;
-
-  if (name !== '') {
-    filteredArray = filteredArray.filter(product =>
-      product.name.toLowerCase().includes(name.toLowerCase())
-    );
-  }
-
-  if (categoryGrp !== 'all') {
-    filteredArray = filteredArray.filter(product => product.categoryId === categoryGrp);
-  }
-
-  if (sort !== '') {
-    filteredArray = [...filteredArray].sort((a, b) => {
-      if (sort === 'priceLowHigh') return a.price - b.price;
-      if (sort === 'priceHighLow') return b.price - a.price;
-      if (sort === 'ratingLowHigh') return a.rating - b.rating;
-      if (sort === 'ratingHighLow') return b.rating - a.rating;
-      return 0;
-    });
-  }
-
-  const totalPages = Math.ceil(filteredArray.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = filteredArray.slice(startIndex, endIndex);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [name, categoryGrp, sort]);
+  const token = Cookies.get("jwt_token");
 
   useEffect(() => {
     async function getProducts() {
-      setLoading(true);
       try {
-        const options={
-          method:'GET',
-          headers:{
-            'Authorization':`Bearer ${token}`
-          }
+        const response = await fetch(`${API_BASE_URL}/products`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // ✅ Prevent JSON crash
+        if (!response.ok) {
+          const text = await response.text();
+          console.error(text);
+          toast.error("Unauthorized or session expired");
+          return;
         }
-        const url = `${API_BASE_URL}/products`;
-        const response = await fetch(url, options);
-        console.log(response);
+
         const data = await response.json();
         setProducts(data.data);
-      } catch (error) {
-        alert(error);
+      } catch (err) {
+        toast.error("Network error");
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
-    getProducts();
-  },[token]);
 
-  useEffect(() => {
-    async function getCategory() {
-      try {
-        const url = `${API_BASE_URL}/category`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setCategory(data.data);
-      } catch (error) {
-        console.error(error);
-      }
+    if (token) {
+      getProducts();
     }
-    getCategory();
-  }, []);
+  }, [token]);
+
+  if (!token) {
+    return <p>Please login to view products</p>;
+  }
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <div className='product'>
-      <div className='filter'>
-        <h2>Filters</h2>
-
-        <input
-          className='search'
-          placeholder='Search'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <div className='category'>
-          <h3>Categories</h3>
-          <a onClick={() => setCategoryGrp('all')}>All</a>
-          {category.map((item) => (
-            <div key={item._id}>
-              <a onClick={() => setCategoryGrp(item.category.toLowerCase())}>
-                {item.category}
-              </a>
-            </div>
-          ))}
+    <div>
+      {products.map((p) => (
+        <div key={p._id}>
+          <h3>{p.name}</h3>
+          <p>{p.price}</p>
         </div>
-
-        <div className='sort'>
-          <h3>Sort By</h3>
-          <a onClick={() => setSort('ratingLowHigh')}>Rating (low - high)</a>
-          <a onClick={() => setSort('ratingHighLow')}>Rating (high - low)</a>
-          <a onClick={() => setSort('priceLowHigh')}>Price (low - high)</a>
-          <a onClick={() => setSort('priceHighLow')}>Price (high - low)</a>
-          <a onClick={() => setSort('')}>Remove Sorting</a>
-        </div>
-      </div>
-
-      <div className='products-container'>
-        <h2>Products</h2>
-
-        {loading ? (
-          <div className='loader'>Loading...</div>
-        ) : (
-          <>
-            <div className='flex-container'>
-              {currentItems.map((product) => (
-                <div key={product._id} className='product-card'>
-                  <Link to={`/product/${product.id}`} className='product-image-link'>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className='product-image'
-                    />
-                  </Link>
-
-                  <div className='product-info'>
-                    <p>{product.name}</p>
-                    <p>Price: {product.price}</p>
-                    <p>Rating: {product.rating}</p>
-                  </div>
-
-                  {getQuantity(product._id) > 0 ? (
-                    <div className='cart-buttons'>
-                      <button onClick={() => { removeFromCart(product._id); toast.info('Removed from cart'); }}>-</button>
-                      <span>{getQuantity(product._id)}</span>
-                      <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>+</button>
-                    </div>
-                  ) : (
-                    <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>Add to Cart</button>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className='pagination'>
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                &#8592;
-              </button>
-
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
-
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-              >
-                &#8594;
-              </button>
-            </div>
-          </>
-        )}
-      </div>
+      ))}
     </div>
   );
 }
