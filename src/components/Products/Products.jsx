@@ -79,7 +79,7 @@ console.log(token);
       setLoading(false);
     }
     getProducts();
-  }, []);
+  },[token]);
 
   useEffect(() => {
     async function getCategory() {
