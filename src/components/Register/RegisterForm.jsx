@@ -88,17 +88,17 @@ function RegisterForm() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <p className='login-error'>If you have already Registered? Please Login</p>
+          <p className='login-error'>If you have already Registered? Please <a href="/login">Login</a></p>
           <div className="register-buttons">
             <button type="submit" className="register-button">Submit</button>
 
-            <button
+            {/* <button
               type="button"
               className="register-button"
               onClick={() => navigate('/login', { replace: true })}
             >
               Login
-            </button>
+            </button> */}
           </div>
 
           {error && <p className="register-error">{error}</p>}

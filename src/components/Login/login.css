@@ -1,199 +1,132 @@
+/* Container */
 .login-form-container {
+    min-height: 100vh;
+    min-width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    min-width: 100vw;
-    background: var(--bg-primary);
-    position: relative;
-    overflow: hidden;
-    padding: 2rem;
+    background-color: #f8fafc; /* soft white */
+    padding: 0.75rem;
 }
 
-.login-form-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
-    animation: float 8s ease-in-out infinite;
-}
-
+/* Card */
 .login-card {
-    min-width: 450px;
-    max-width: 500px;
     width: 100%;
-    padding: 3rem 2.5rem;
-    background: var(--bg-card);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-2xl);
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    z-index: 1;
-    animation: fadeIn 0.6s ease-out;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 1.75rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
 }
 
+/* Title */
 .login-title {
     text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
-    font-family: var(--font-heading);
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #0f172a; /* dark navy */
+    margin-bottom: 1.25rem;
 }
 
+/* Input wrapper */
 .login-item {
-    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
+    margin-bottom: 0.9rem;
 }
 
+/* Labels */
 .login-label {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 1rem;
+    font-size: 0.85rem;
+    color: #334155; /* slate */
+    margin-bottom: 0.25rem;
 }
 
+/* Inputs */
 .login-input {
-    padding: 1rem 1.25rem;
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    transition: all var(--transition-base);
-    font-family: var(--font-body);
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    border: 1px solid #94a3b8;
+    background-color: #ffffff;
+    color: #0f172a;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-input::placeholder {
+    color: #64748b;
+}
+
+.login-input:hover {
+    border-color: #1e40af; /* dark blue */
 }
 
 .login-input:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    background: var(--bg-card-hover);
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.25);
 }
 
-.login-input::placeholder {
-    color: var(--text-muted);
-}
-
+/* Button */
 .login-button {
-    padding: 1rem 2rem;
-    background: var(--primary-gradient);
-    border: none;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: block;
     width: 100%;
-    margin: 2rem 0 1rem;
-    transition: all var(--transition-base);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    position: relative;
-    overflow: hidden;
-}
-
-.login-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.login-button:hover::before {
-    width: 300px;
-    height: 300px;
+    margin-top: 1rem;
+    padding: 0.65rem;
+    background-color: #1e3a8a; /* navy blue */
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .login-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    background-color: #1e40af;
+    box-shadow: 0 6px 14px rgba(30, 64, 175, 0.35);
 }
 
-.login-button:active {
-    transform: translateY(0);
-}
-
+/* Error message */
 .login-error {
-    color: #E63946;
+    margin-top: 0.75rem;
+    padding: 0.55rem;
+    font-size: 0.85rem;
+    color: #7f1d1d;
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
     text-align: center;
-    font-size: 0.95rem;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background: rgba(230, 57, 70, 0.1);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(230, 57, 70, 0.3);
 }
 
+/* Bottom links in row */
 .login-buttons {
-    padding: 1rem 0;
+    margin-top: 0.9rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
 }
 
 .login-buttons a {
-    color: var(--primary-color);
+    color: #1e40af;
+    font-size: 0.85rem;
     text-decoration: none;
-    font-weight: 600;
-    transition: all var(--transition-base);
-    font-size: 0.95rem;
+    transition: color 0.2s ease;
 }
 
 .login-buttons a:hover {
-    color: var(--primary-light);
+    color: #1e3a8a;
     text-decoration: underline;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .login-card {
-        min-width: 100%;
-        padding: 2.5rem 2rem;
-    }
-
-    .login-title {
-        font-size: 2rem;
-    }
-}
-
+/* Mobile */
 @media (max-width: 480px) {
-    .login-form-container {
-        padding: 1rem;
-    }
-
     .login-card {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem;
     }
 
     .login-title {
-        font-size: 1.75rem;
-    }
-
-    .login-buttons {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .login-buttons a {
-        text-align: center;
+        font-size: 1.5rem;
     }
 }

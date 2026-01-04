@@ -94,18 +94,18 @@ function Login() {
           </div>
 
           <p className="login-note">
-            If you don't have an account? Please Register.
+            If you don't have an account ?  <a href="/register">Register</a>
           </p>
 
           <div className="login-buttons">
             <button type="submit" className="login-button">Submit</button>
-            <button
+            {/* <button
               type="button"
               className="login-button"
               onClick={() => navigate("/register", { replace: true })}
             >
               Register
-            </button>
+            </button> */}
           </div>
 
           {error && <p className="login-error">{error}</p>}

@@ -6,6 +6,8 @@ import Cookies from 'js-cookie';
 import ImageMagnifier from '../Image/Image';
 import { toast } from 'react-toastify';
 import API_BASE_URL from '../../config';
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
 
 function DetailedView() {
   // const { addToCart } = useContext(CartContext);
@@ -25,8 +27,15 @@ function DetailedView() {
   useEffect(() => {
     const getProduct = async () => {
       try {
+        const token = Cookies.get('jwt_token');
+        const options ={
+          headers: {
+            'Authorization': `Bearer ${token}`
+        }
+
+      }
         const url = `${API_BASE_URL}/product/${id}`;
-        const response = await fetch(url);
+        const response = await fetch(url, options);
         const data = await response.json();
         setProduct(data.data);
       } catch (e) {
@@ -135,19 +144,21 @@ function DetailedView() {
   // };
 
   return (
+   <>
+   <Navbar/>
     <div className="detail-view">
       <div className="products-card">
-        <div className="flex">
+       
           <ImageMagnifier
             src={product.image}
-            width={300}
+            width={200}
             height={300}
             magnifierHeight={300}
-            magnifierWidth={300}
+            magnifierWidth={400}
             zoomLevel={3}
             alt={product.name}
           />
-        </div>
+        
 
         <div className="product-details">
           <h2>PRODUCT NAME:</h2>
@@ -243,6 +254,8 @@ function DetailedView() {
         )}
       </div>
     </div>
+   <Footer/>
+   </>
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
+import Navbar from '../Navbar/Navbar'
+import Footer from '../Footer/Footer'
 function Home() {
   const navigate = useNavigate()
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -41,6 +43,8 @@ function Home() {
     <div>
       {/* Hero Section */}
       <div className='home-hero'>
+        <Navbar/>
+
         <div className='hero-content'>
           <h1>Welcome to ShopEasy</h1>
           <p>
@@ -117,6 +121,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   )
 }

@@ -5,16 +5,15 @@ import { CartContext } from '../CartContext.jsx';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import API_BASE_URL from '../../config';
+import Navbar from '../Navbar/Navbar.jsx';
+import Footer from '../Footer/Footer.jsx';
 
 function Products() {
-
   const { addToCart, removeFromCart, cart } = useContext(CartContext);
- const token = Cookies.get('jwt_token');
-console.log(token);
-  const [categoryGrp, setCategoryGrp] = useState('all');
-  const [category, setCategory] = useState([]);
-  const [products, setProducts] = useState([]);
+  const token = Cookies.get('jwt_token');
 
+  const [categoryGrp, setCategoryGrp] = useState('all');
+  const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
   const [sort, setSort] = useState('');
   const [loading, setLoading] = useState(true);
@@ -27,19 +26,22 @@ console.log(token);
     return item ? item.count : 0;
   };
 
+  /* ---------- FILTERING ---------- */
   let filteredArray = products;
 
-  if (name !== '') {
+  if (name) {
     filteredArray = filteredArray.filter(product =>
       product.name.toLowerCase().includes(name.toLowerCase())
     );
   }
 
   if (categoryGrp !== 'all') {
-    filteredArray = filteredArray.filter(product => product.categoryId === categoryGrp);
+    filteredArray = filteredArray.filter(
+      product => product.categoryId === categoryGrp
+    );
   }
 
-  if (sort !== '') {
+  if (sort) {
     filteredArray = [...filteredArray].sort((a, b) => {
       if (sort === 'priceLowHigh') return a.price - b.price;
       if (sort === 'priceHighLow') return b.price - a.price;
@@ -49,148 +51,146 @@ console.log(token);
     });
   }
 
+  /* ---------- PAGINATION ---------- */
   const totalPages = Math.ceil(filteredArray.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = filteredArray.slice(startIndex, endIndex);
+  const currentItems = filteredArray.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   useEffect(() => {
     setCurrentPage(1);
   }, [name, categoryGrp, sort]);
 
+  /* ---------- FETCH PRODUCTS ---------- */
   useEffect(() => {
     async function getProducts() {
       setLoading(true);
       try {
-        const options={
-          method:'GET',
-          headers:{
-            'Authorization':`Bearer ${token}`
-          }
-        }
-        const url = `${API_BASE_URL}/products`;
-        const response = await fetch(url, options);
-        console.log(response);
+        const response = await fetch(`${API_BASE_URL}/products`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
         const data = await response.json();
-        setProducts(data.data);
+        setProducts(data.data || []);
+        console.log(data.data);
       } catch (error) {
-        alert(error);
+        toast.error('Failed to load products');
+        console.error(error);
       }
       setLoading(false);
     }
     getProducts();
-  },[token]);
+  }, [token]);
 
-  useEffect(() => {
-    async function getCategory() {
-      try {
-        const url = `${API_BASE_URL}/category`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setCategory(data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getCategory();
-  }, []);
+ 
 
   return (
-    <div className='product'>
-      <div className='filter'>
-        <h2>Filters</h2>
+    <>
+      <Navbar />
 
-        <input
-          className='search'
-          placeholder='Search'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      <div className='product'>
+        {/* FILTER */}
+        <div className='filter'>
+          <h2>Filters</h2>
 
-        <div className='category'>
-          <h3>Categories</h3>
-          <a onClick={() => setCategoryGrp('all')}>All</a>
-          {category.map((item) => (
-            <div key={item._id}>
-              <a onClick={() => setCategoryGrp(item.category.toLowerCase())}>
-                {item.category}
-              </a>
-            </div>
-          ))}
+          <input
+            className='search'
+            placeholder='Search'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <div className='category'>
+            <h3>Categories</h3>
+            <button className='anchor' onClick={() => setCategoryGrp('all')}>All</button>
+            <button className='anchor' onClick={()=>setCategoryGrp("men")}>Men</button>
+            <button className='anchor' onClick={()=>setCategoryGrp("women")}>Women</button>
+            <button className='anchor' onClick={()=>setCategoryGrp("kids")}>kids</button>
+          </div>
+
+          <div className='sort'>
+            <h3>Sort By</h3>
+            <button className='anchor' onClick={() => setSort('ratingLowHigh')}>Rating ↑</button>
+            <button className='anchor' onClick={() => setSort('ratingHighLow')}>Rating ↓</button>
+            <button className='anchor' onClick={() => setSort('priceLowHigh')}>Price ↑</button>
+            <button className='anchor' onClick={() => setSort('priceHighLow')}>Price ↓</button>
+            <button className='anchor' onClick={() => setSort('')}>Clear</button>
+          </div>
         </div>
 
-        <div className='sort'>
-          <h3>Sort By</h3>
-          <a onClick={() => setSort('ratingLowHigh')}>Rating (low - high)</a>
-          <a onClick={() => setSort('ratingHighLow')}>Rating (high - low)</a>
-          <a onClick={() => setSort('priceLowHigh')}>Price (low - high)</a>
-          <a onClick={() => setSort('priceHighLow')}>Price (high - low)</a>
-          <a onClick={() => setSort('')}>Remove Sorting</a>
-        </div>
-      </div>
+        {/* PRODUCTS */}
+        <div className='products-container'>
+          <h2>Products</h2>
 
-      <div className='products-container'>
-        <h2>Products</h2>
+          {loading ? (
+            <div className='loader'>Loading...</div>
+          ) : (
+            <>
+              <div className='flex-container'>
+                {currentItems.map(product => (
+                  <div key={product._id} className='product-card'>
+                    <Link
+                      to={`/product/${product.id}`}
+                      className='product-image-link'
+                    >
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className='product-image'
+                      />
+                    </Link>
 
-        {loading ? (
-          <div className='loader'>Loading...</div>
-        ) : (
-          <>
-            <div className='flex-container'>
-              {currentItems.map((product) => (
-                <div key={product._id} className='product-card'>
-                  <Link to={`/product/${product.id}`} className='product-image-link'>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className='product-image'
-                    />
-                  </Link>
-
-                  <div className='product-info'>
-                    <p>{product.name}</p>
-                    <p>Price: {product.price}</p>
-                    <p>Rating: {product.rating}</p>
-                  </div>
-
-                  {getQuantity(product._id) > 0 ? (
-                    <div className='cart-buttons'>
-                      <button onClick={() => { removeFromCart(product._id); toast.info('Removed from cart'); }}>-</button>
-                      <span>{getQuantity(product._id)}</span>
-                      <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>+</button>
+                    <div className='product-info'>
+                      <p>{product.name}</p>
+                      <p>₹ {product.price}</p>
+                      <p>⭐ {product.rating}</p>
                     </div>
-                  ) : (
-                    <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>Add to Cart</button>
-                  )}
-                </div>
-              ))}
-            </div>
 
-            <div className='pagination'>
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                &#8592;
-              </button>
+                    {getQuantity(product._id) > 0 ? (
+                      <div className='cart-buttons'>
+                        <button onClick={() => removeFromCart(product._id)}>-</button>
+                        <span>{getQuantity(product._id)}</span>
+                        <button onClick={() => addToCart(product)}>+</button>
+                      </div>
+                    ) : (
+                      <button onClick={() => addToCart(product)}>
+                        Add to Cart
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
 
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
+              {/* PAGINATION */}
+              <div className='pagination'>
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                >
+                  ←
+                </button>
 
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-              >
-                &#8594;
-              </button>
-            </div>
-          </>
-        )}
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+
+                <button
+                  onClick={() =>
+                    setCurrentPage(p => Math.min(p + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                >
+                  →
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+
+      <Footer />
+    </>
   );
 }
 

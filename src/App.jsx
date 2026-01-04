@@ -26,7 +26,7 @@ import 'react-toastify/dist/ReactToastify.css'
 function App() {
   return (
     <CartProvider>
-      <Navbar />
+      
       <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         
@@ -45,7 +45,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      
     </CartProvider>
   )
 }
