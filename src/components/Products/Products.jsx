@@ -3,7 +3,7 @@ import './Products.css';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../CartContext.jsx';
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
+
 import API_BASE_URL from '../../config';
 import Navbar from '../Navbar/Navbar.jsx';
 import Footer from '../Footer/Footer.jsx';
@@ -71,11 +71,18 @@ function Products() {
         const response = await fetch(`${API_BASE_URL}/products`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {}
         });
+        console.log(response);
         const data = await response.json();
+        if (response.status !== 200) {
+          throw new Error(data.message || 'Failed to fetch products');
+
+        }
+        console.log(data);
         setProducts(data.data || []);
         console.log(data.data);
+        console.log(data);
       } catch (error) {
-        toast.error('Failed to load products');
+        console.error('Failed to load products');
         console.error(error);
       }
       setLoading(false);
@@ -83,7 +90,7 @@ function Products() {
     getProducts();
   }, [token]);
 
- 
+
 
   return (
     <>
@@ -104,9 +111,9 @@ function Products() {
           <div className='category'>
             <h3>Categories</h3>
             <button className='anchor' onClick={() => setCategoryGrp('all')}>All</button>
-            <button className='anchor' onClick={()=>setCategoryGrp("men")}>Men</button>
-            <button className='anchor' onClick={()=>setCategoryGrp("women")}>Women</button>
-            <button className='anchor' onClick={()=>setCategoryGrp("kids")}>kids</button>
+            <button className='anchor' onClick={() => setCategoryGrp("men")}>Men</button>
+            <button className='anchor' onClick={() => setCategoryGrp("women")}>Women</button>
+            <button className='anchor' onClick={() => setCategoryGrp("kids")}>kids</button>
           </div>
 
           <div className='sort'>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { toast } from 'react-toastify';
+
 import API_BASE_URL from '../../config';
 import './OrderHistory.css';
 
@@ -19,7 +19,7 @@ function OrderHistory() {
     try {
       setLoading(true);
       const token = Cookies.get('jwt_token');
-      
+
       if (!token) {
         setError('Please login to view orders');
         setLoading(false);
@@ -31,10 +31,10 @@ function OrderHistory() {
 
       const response = await fetch(
         `${API_BASE_URL}/orders`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
+      }
       );
 
       const data = await response.json();
@@ -43,11 +43,11 @@ function OrderHistory() {
         setOrders(data);
       } else {
         setError(data.message || 'Failed to fetch orders');
-        toast.error(data.message || 'Failed to fetch orders');
+        console.error(data.message || 'Failed to fetch orders');
       }
     } catch (err) {
       setError('Error fetching orders: ' + err.message);
-      toast.error('Error fetching orders');
+      console.error('Error fetching orders');
     } finally {
       setLoading(false);
     }
@@ -103,7 +103,7 @@ function OrderHistory() {
           <div className="orders-list">
             {orders.map((order) => (
               <div key={order._id} className="order-item">
-                <div 
+                <div
                   className="order-header"
                   onClick={() => setExpandedOrder(expandedOrder === order._id ? null : order._id)}
                 >
@@ -113,7 +113,7 @@ function OrderHistory() {
                   </div>
                   <div className="order-info">
                     <p className="order-amount">₹{order.totalPrice.toFixed(2)}</p>
-                    <span 
+                    <span
                       className="order-status"
                       style={{ backgroundColor: getStatusColor(order.status || 'pending') }}
                     >

@@ -4,14 +4,15 @@ import { useParams } from 'react-router';
 import { CartContext } from '../CartContext';
 import Cookies from 'js-cookie';
 import ImageMagnifier from '../Image/Image';
-import { toast } from 'react-toastify';
+// import { Link } from "react-router-dom";
+
 import API_BASE_URL from '../../config';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 
 function DetailedView() {
   // const { addToCart } = useContext(CartContext);
-   const { addToCart, removeFromCart, cart } = useContext(CartContext)
+  const { addToCart, removeFromCart, cart } = useContext(CartContext)
   const [product, setProduct] = useState({});
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState('');
@@ -19,21 +20,21 @@ function DetailedView() {
   // const [wishlistLoading, setWishlistLoading] = useState(false);
 
   const { id } = useParams();
- const getQuantity = (id) => {
-  const item = cart.find(p => p._id === id)
-  return (item? item.count : 0)
-}
-  
+  const getQuantity = (id) => {
+    const item = cart.find(p => p._id === id)
+    return (item ? item.count : 0)
+  }
+
   useEffect(() => {
     const getProduct = async () => {
       try {
         const token = Cookies.get('jwt_token');
-        const options ={
+        const options = {
           headers: {
             'Authorization': `Bearer ${token}`
-        }
+          }
 
-      }
+        }
         const url = `${API_BASE_URL}/product/${id}`;
         const response = await fetch(url, options);
         const data = await response.json();
@@ -45,7 +46,7 @@ function DetailedView() {
     getProduct();
   }, [id]);
 
- 
+
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -62,13 +63,17 @@ function DetailedView() {
 
 
   const handleCreateReview = async () => {
-    if (!newReview.trim()) return toast.error('Please write a review before submitting.');
+    if (!newReview.trim()) return alert('Please write a review before submitting.');
 
     try {
+      const token = Cookies.get('jwt_token');
       const url = `${API_BASE_URL}/review/${id}`;
       const options = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ review: newReview }),
       };
       const response = await fetch(url, options);
@@ -77,13 +82,14 @@ function DetailedView() {
       if (response.ok) {
         setReviews([...reviews, data.data]); // instantly update list
         setNewReview('');
-        toast.success('Review posted!');
+        console.log('Review posted!');
+        // toast.success('Review posted!');
       } else {
-        toast.error(data.message || 'Failed to post review.');
+        console.error(data.message || 'Failed to post review.');
       }
     } catch (e) {
       console.log('Error creating review:', e);
-      toast.error('Error posting review');
+      console.error('Error posting review');
     }
   };
 
@@ -95,17 +101,17 @@ function DetailedView() {
 
       if (response.ok) {
         setReviews(reviews.filter((r) => r._id !== reviewId));
-        toast.info('Review deleted');
+        console.log('Review deleted');
       } else {
-        toast.error(data.message || 'Failed to delete review.');
+        console.error(data.message || 'Failed to delete review.');
       }
     } catch (e) {
       console.log('Error deleting review:', e);
-      toast.error('Error deleting review');
+      console.error('Error deleting review');
     }
   };
 
- 
+
   // const handleAddToCart = () => {
   //   for (let i = 0; i < quantity; i++) {
   //     addToCart(product);
@@ -114,7 +120,7 @@ function DetailedView() {
   //   alert(`${quantity} item(s) added to cart!`);
   // };
 
- 
+
   // const handleAddToWishlist = async () => {
   //   try {
   //     const token = Cookies.get('jwt_token');
@@ -144,11 +150,11 @@ function DetailedView() {
   // };
 
   return (
-   <>
-   <Navbar/>
-    <div className="detail-view">
-      <div className="products-card">
-       
+    <>
+      <Navbar />
+      <div className="detail-view">
+        <div className="products-card">
+
           <ImageMagnifier
             src={product.image}
             width={200}
@@ -158,104 +164,104 @@ function DetailedView() {
             zoomLevel={3}
             alt={product.name}
           />
-        
 
-        <div className="product-details">
-          <h2>PRODUCT NAME:</h2>
-          <p>{product.name}</p>
-          <h2>DESCRIPTION:</h2>
-          <p>{product.description}</p>
-          <h2>PRICE:</h2>
-          <p className="price-text">₹{product.price}</p>
-          <h2>RATING:</h2>
-          <p>⭐{product.rating || 'N/A'}</p>
-          
-        {getQuantity(product._id) > 0 ? (
-                    <div className="cart-buttons">
-                      <button onClick={() => { removeFromCart(product._id); toast.info('Removed from cart'); }}>-</button>
-                      <span>{getQuantity(product._id)}</span>
-                      <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>+</button>
-                    </div>
-                  ) : (
-                    <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>Add to Cart</button>
-                  )}
-                  
-                 
-         
-        </div>
-      </div>
 
-      {/* ✅ Review Section */}
-      <div className="review-section">
-        <h2>Reviews</h2>
+          <div className="product-details">
+            <h2>PRODUCT NAME:</h2>
+            <p>{product.name}</p>
+            <h2>DESCRIPTION:</h2>
+            <p>{product.description}</p>
+            <h2>PRICE:</h2>
+            <p className="price-text">₹{product.price}</p>
+            <h2>RATING:</h2>
+            <p>⭐{product.rating || 'N/A'}</p>
 
-        <div style={{ marginBottom: '20px' }}>
-          <input
-            type="text"
-            value={newReview}
-            onChange={(e) => setNewReview(e.target.value)}
-            placeholder="Write your review here..."
-            style={{
-              width: '50%',
-              margin: '0px 10px',
-              padding: '10px',
-              borderRadius: '8px',
-              border: '1px solid gray',
-            }}
-          />
-          <button
-            onClick={handleCreateReview}
-            style={{
-              padding: '10px 20px',
-              borderRadius: '8px',
-              border: 'none',
-              backgroundColor: '#00aaff',
-              color: 'white',
-            }}
-          >
-            Submit
-          </button>
+            {getQuantity(product._id) > 0 ? (
+              <div className="cart-buttons">
+                <button onClick={() => { removeFromCart(product._id); toast.info('Removed from cart'); }}>-</button>
+                <span>{getQuantity(product._id)}</span>
+                <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>+</button>
+              </div>
+            ) : (
+              <button onClick={() => { addToCart(product); toast.success('Added to cart'); }}>Add to Cart</button>
+            )}
+
+
+
+          </div>
         </div>
 
-        {reviews.length === 0 ? (
-          <p 
-            style={{ fontStyle: 'italic', color: 'black', margin:'10px 10px' }}
+        {/* ✅ Review Section */}
+        <div className="review-section">
+          <h2>Reviews</h2>
 
-          >No reviews yet. Be the first to review!</p>
-        ) : (
-          reviews.map((review) => (
-            <div
-              key={review._id}
+          <div style={{ marginBottom: '20px' }}>
+            <input
+              type="text"
+              value={newReview}
+              onChange={(e) => setNewReview(e.target.value)}
+              placeholder="Write your review here..."
               style={{
-                borderBottom: '1px solid gray',
-                padding: '10px 0',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                margin:'0 10px',
-                fontWeight:'500'
+                width: '50%',
+                margin: '0px 10px',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid gray',
+              }}
+            />
+            <button
+              onClick={handleCreateReview}
+              style={{
+                padding: '10px 20px',
+                borderRadius: '8px',
+                border: 'none',
+                backgroundColor: '#00aaff',
+                color: 'white',
               }}
             >
-              <p>{review.review}</p>
-              <button
-                onClick={() => handleDeleteReview(review._id)}
+              Submit
+            </button>
+          </div>
+
+          {reviews.length === 0 ? (
+            <p
+              style={{ fontStyle: 'italic', color: 'black', margin: '10px 10px' }}
+
+            >No reviews yet. Be the first to review!</p>
+          ) : (
+            reviews.map((review) => (
+              <div
+                key={review._id}
                 style={{
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  padding: '5px 10px',
+                  borderBottom: '1px solid gray',
+                  padding: '10px 0',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  margin: '0 10px',
+                  fontWeight: '500'
                 }}
               >
-                ❌
-              </button>
-            </div>
-          ))
-        )}
+                <p>{review.review}</p>
+                <button
+                  onClick={() => handleDeleteReview(review._id)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
+                    padding: '5px 10px',
+                  }}
+                >
+                  ❌
+                </button>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-    </div>
-   <Footer/>
-   </>
+      <Footer />
+    </>
   );
 }
 

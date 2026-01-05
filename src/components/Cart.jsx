@@ -4,23 +4,23 @@ import "./Cart.css";
 import Payment from "./Payment";
 import { Navigate, useNavigate } from "react-router";
 
-import { toast } from 'react-toastify';
+
 
 function Cart() {
-  const { cart, addToCart, removeFromCart, clearCart, totalItems, totalPrice ,deleteItem} = useContext(CartContext);
-  const navigate=useNavigate()
-  function payment(){
+  const { cart, addToCart, removeFromCart, clearCart, totalItems, totalPrice, deleteItem } = useContext(CartContext);
+  const navigate = useNavigate()
+  function payment() {
     navigate("/checkout")
   }
 
   const handleClearCart = () => {
     clearCart();
-    toast.info('Cart cleared');
+    // Cart cleared
   };
 
   const handleDeleteItem = (id) => {
     deleteItem(id);
-    toast.warn('Item removed from cart');
+    // Item removed
   };
 
   return (
@@ -44,11 +44,11 @@ function Cart() {
                   </div>
 
                   <div className="cart-buttons">
-                    <button className="dec" onClick={() => { removeFromCart(item._id); toast.info('Quantity decreased'); }}>-</button>
+                    <button className="dec" onClick={() => { removeFromCart(item._id); }}>-</button>
                     <span className="item-count">{item.count}</span>
-                    <button className="inc" onClick={() => { addToCart(item); toast.success('Quantity increased'); }}>+</button>
+                    <button className="inc" onClick={() => { addToCart(item); }}>+</button>
                   </div>
-                  <button className="delete-button"onClick={() => handleDeleteItem(item._id)} >❌</button>
+                  <button className="delete-button" onClick={() => handleDeleteItem(item._id)} >❌</button>
                 </li>
               ))}
             </ul>
@@ -57,7 +57,7 @@ function Cart() {
               <p>Total Items: {totalItems}</p>
               <p>Total Price: ₹{totalPrice}</p>
               <button className="clear-cart" onClick={handleClearCart}>Clear Cart</button>
-               <button className="clear-cart" onClick={payment} >Checkout</button>
+              <button className="clear-cart" onClick={payment} >Checkout</button>
             </div>
           </>
         )}

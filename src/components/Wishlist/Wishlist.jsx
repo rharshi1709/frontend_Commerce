@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { toast } from 'react-toastify';
+
 import API_BASE_URL from '../../config';
 import './Wishlist.css';
 
@@ -25,13 +25,13 @@ function Wishlist() {
         setLoading(false);
         return;
       }
-      
+
       const response = await fetch(
         `${API_BASE_URL}/wishlist`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
+      }
       );
 
       const data = await response.json();
@@ -53,7 +53,7 @@ function Wishlist() {
       const token = Cookies.get('jwt_token');
       const response = await fetch(
         `${API_BASE_URL}/wishlist/${productId}`,
-        { 
+        {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -65,12 +65,12 @@ function Wishlist() {
 
       if (response.ok) {
         setWishlist(wishlist.filter(item => item._id !== productId));
-        toast.success('Removed from wishlist');
+        // Removed from wishlist
       } else {
-        toast.error(data.message || 'Failed to remove');
+        console.error(data.message || 'Failed to remove');
       }
     } catch (err) {
-      toast.error('Error removing from wishlist');
+      console.error('Error removing from wishlist');
     }
   };
 
@@ -125,7 +125,7 @@ function Wishlist() {
             </div>
 
             <div className="wishlist-actions">
-              <button 
+              <button
                 className="continue-shopping"
                 onClick={() => navigate('/products')}
               >

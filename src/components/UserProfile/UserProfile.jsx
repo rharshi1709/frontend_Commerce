@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+
 import './UserProfile.css';
 
 function UserProfile() {
@@ -57,13 +57,13 @@ function UserProfile() {
 
     try {
       localStorage.setItem('userProfile', JSON.stringify(formData));
-      toast.success('Profile updated successfully!');
+      alert('Profile updated successfully!');
       setMessage('Profile updated successfully!');
       setIsEditing(false);
       setTimeout(() => setMessage(''), 3000);
     } catch (err) {
       setError('Error saving profile: ' + err.message);
-      toast.error('Error saving profile');
+      console.error('Error saving profile');
     } finally {
       setLoading(false);
     }
@@ -125,7 +125,7 @@ function UserProfile() {
           <form onSubmit={handleSaveProfile} className="profile-form">
             <div className="form-section">
               <h2>Edit Personal Information</h2>
-              
+
               <div className="form-group">
                 <label>Full Name</label>
                 <input
@@ -185,9 +185,9 @@ function UserProfile() {
                 <button type="submit" className="btn btn-primary" disabled={loading}>
                   {loading ? 'Saving...' : 'Save Changes'}
                 </button>
-                <button 
-                  type="button" 
-                  className="btn btn-secondary" 
+                <button
+                  type="button"
+                  className="btn btn-secondary"
                   onClick={() => {
                     setIsEditing(false);
                     loadUserProfile();

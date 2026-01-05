@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../CartContext';
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
+
 import API_BASE_URL from '../../config';
 import './Checkout.css';
 
@@ -33,15 +33,15 @@ function Checkout() {
 
   const validateForm = () => {
     if (!formData.firstName || !formData.lastName || !formData.email) {
-      toast.error('Please fill in all personal details');
+      alert('Please fill in all personal details');
       return false;
     }
     if (!formData.street || !formData.city || !formData.state || !formData.zipCode) {
-      toast.error('Please fill in all address details');
+      alert('Please fill in all address details');
       return false;
     }
     if (cart.length === 0) {
-      toast.error('Your cart is empty');
+      alert('Your cart is empty');
       return false;
     }
     return true;
@@ -150,13 +150,13 @@ function Checkout() {
 
             if (dbOrderRes.ok) {
               clearCart();
-              toast.success('Order placed successfully!');
+              alert('Order placed successfully!');
               navigate('/payment');
             } else {
-              toast.error('Failed to save order details');
+              console.error('Failed to save order details');
             }
           } else {
-            toast.error(verifyData.message || 'Payment verification failed');
+            console.error(verifyData.message || 'Payment verification failed');
           }
         },
         prefill: {
@@ -173,7 +173,7 @@ function Checkout() {
 
     } catch (err) {
       setError('Error: ' + err.message);
-      toast.error(err.message);
+      console.error(err.message);
     } finally {
       setLoading(false);
     }
