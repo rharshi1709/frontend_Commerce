@@ -2,7 +2,8 @@
 .about-section{
      background-color: #eef2f6; /* updated light background */
       min-height: 100vh;
-      padding: 30px;
+      padding: 20px;
+        margin-top: 60px;
 }
 .about {
     display: flex;
@@ -163,7 +164,7 @@ span{
     .about-section{
      background-color: #eef2f6;
       min-height: 100vh;
-      padding: 12px;
+      margin-top: 1px;
 }
     .about {
         flex-direction: column;

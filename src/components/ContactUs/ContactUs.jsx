@@ -2,6 +2,9 @@ import React from 'react'
 import './ContactUs.css'
 import { useState } from 'react'
 import API_BASE_URL from '../../config.js';
+import Navbar from '../Navbar/Navbar.jsx';
+import Cookies from 'js-cookie';
+import Footer from '../Footer/Footer.jsx';
 
 function ContactUs() {
   const [name, setName] = useState('');
@@ -12,6 +15,7 @@ function ContactUs() {
     event.preventDefault()
     setErr('');
     try {
+      const token=Cookies.get('jwt_token');
       const details = { name, phone, message };
       const url = `${API_BASE_URL}/contact`;
 
@@ -20,6 +24,7 @@ function ContactUs() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(details),
       };
@@ -43,6 +48,8 @@ function ContactUs() {
     }
   }
   return (
+    <>
+    <Navbar/>
     <div className='contact-top'>
       <div className="contact-container">
 
@@ -80,12 +87,14 @@ function ContactUs() {
           <textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} name="message" rows="5" required></textarea>
           <p>{err}</p>
           <div className='btn-center'>
-            <button type="submit">Submit</button>
+            <button className='view-btn' type="submit">Submit</button>
           </div>
         </form>
       </div>
 
     </div>
+    <Footer/>
+    </>
   )
 }
 

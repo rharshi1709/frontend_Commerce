@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
+import Cookies from 'js-cookie'
 function Home() {
   const navigate = useNavigate()
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -18,9 +19,19 @@ function Home() {
   
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
+      const token = Cookies.get('jwt_token');
+      console.log("Token in Home:", token)
+     const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
       try {
+
         const url = 'https://backend-commerce-1.onrender.com/api/products'
-        const response = await fetch(url)
+        const response = await fetch(url, options)
         const data = await response.json()
         
         if (data.data) {
@@ -63,7 +74,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Featured Products Section */}
+     
       <div className='featured-section'>
         <h2>Featured Products</h2>
         <p className='section-subtitle'>Top-rated products you'll love</p>
@@ -80,7 +91,7 @@ function Home() {
               >
                 <div className='product-image'>
                   <img src={product.image} alt={product.name} />
-                  <span className='product-badge'>★ {product.rating}</span>
+                  {/* <span className='product-badge'>★ {product.rating}</span> */}
                 </div>
                 <div className='card-content'>
                   <h3>{product.name}</h3>
@@ -95,7 +106,6 @@ function Home() {
         )}
       </div>
 
-      {/* Benefits Section */}
       <div className='benefits-section'>
         <h2>Why Shop with Us?</h2>
         <div className='benefits-grid'>

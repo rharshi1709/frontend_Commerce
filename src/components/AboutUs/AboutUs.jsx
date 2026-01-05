@@ -1,9 +1,13 @@
 import React from 'react'
 import './AboutUs.css'
+import Footer from '../Footer/Footer'
+import Navbar from '../Navbar/Navbar'
 
 function AboutUs() {
   return (
-    <div className='about-section'>
+   <>
+  <Navbar/>
+   <div className='about-section'>
       <div>
         <div className="about">
           <img 
@@ -94,6 +98,8 @@ function AboutUs() {
 
       </div>
     </div>
+   <Footer/>
+   </>
   )
 }
 
